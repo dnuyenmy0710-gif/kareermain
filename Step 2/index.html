@@ -196,6 +196,109 @@
       align-items: center;
       letter-spacing: 0.08em;
     }
+
+    /* Results UI */
+    .result-screen { display: none; }
+    .result-hdr { text-align: center; margin-bottom: 40px; }
+    .result-title { font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 900; text-transform: uppercase; }
+
+    .insight-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+      margin-bottom: 50px;
+    }
+
+    .insight-block {
+      background: white;
+      border-radius: 16px;
+      padding: 30px 20px;
+      box-shadow: 8px 8px 0px 0px #000;
+      border: 3px solid #000;
+    }
+
+    .insight-list { list-style: none; padding: 0; margin: 0; }
+    .insight-list li { font-size: 0.95rem; line-height: 1.6; padding-left: 1.5rem; position: relative; margin-bottom: 10px; }
+    .insight-list li::before { content: '→'; position: absolute; left: 0; font-weight: bold; }
+
+    /* Scientific Models */
+    .theory-box {
+      background: var(--bg-white);
+      border: 3px solid var(--text-black);
+      border-radius: 12px;
+      padding: 35px 25px;
+      margin-top: 50px;
+      margin-bottom: 50px;
+      box-shadow: 10px 10px 0px 0px rgba(0,0,0,1);
+    }
+
+    .theory-title { font-size: 1.4rem; font-weight: 900; margin-bottom: 30px; text-transform: uppercase; border-bottom: 3px solid var(--text-black); padding-bottom: 15px; }
+
+    .theory-section { border: 2px solid var(--text-black); border-radius: 12px; background: #fafafa; padding: 25px 20px; margin-bottom: 30px; }
+    .theory-section-hdr { font-weight: 900; font-size: 1.2rem; margin-bottom: 20px; border-bottom: 1.5px dashed #ccc; padding-bottom: 10px; }
+
+    .dim-item { padding: 20px; background: white; border: 2px solid #eee; border-radius: 10px; margin-bottom: 15px; }
+    .dim-item-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .dim-label { font-weight: 800; font-size: 1rem; }
+    .dim-badge { font-weight: 800; padding: 5px 15px; border-radius: 8px; font-size: 0.75rem; text-transform: uppercase; }
+
+    .dim-bar-track { height: 10px; background: #f0f0f0; border-radius: 5px; overflow: hidden; margin-bottom: 12px; border: 1px solid #ddd; }
+    .dim-bar-fill { height: 100%; transition: width 1s ease-out; }
+
+    .val-vhigh { background: #111; color: white; }
+    .val-med   { background: #666; color: white; }
+    .val-low   { background: #999; color: white; }
+
+    /* Recommendation Box */
+    .recommendation-box {
+      background: #fff;
+      border: 3px solid #000;
+      border-radius: 16px;
+      padding: 40px 25px;
+      margin-top: 50px;
+      margin-bottom: 50px;
+      box-shadow: 12px 12px 0px 0px #000;
+    }
+
+    .rec-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-top: 30px;
+    }
+
+    .rec-item {
+      padding: 25px;
+      border-radius: 12px;
+      border: 2px solid #000;
+    }
+
+    .rec-suitable { background: #f0faf0; border-color: #2e7d32; }
+    .rec-unsuitable { background: #fff5f5; border-color: #c62828; }
+
+    .rec-title { font-weight: 900; text-transform: uppercase; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+
+    /* Buttons */
+    .btn {
+      padding: 1rem 2.5rem; border-radius: 999px; font-weight: 800; font-size: 0.95rem; cursor: pointer; border: 3px solid var(--text-black); text-transform: uppercase; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 10px; box-shadow: 4px 4px 0px 0px #000;
+    }
+    .btn-primary { background: var(--accent); color: white; }
+    .btn-ghost { background: transparent; color: var(--text-black); box-shadow: none; border-width: 2px; }
+    .btn:hover:not(:disabled) { transform: translate(-2px, -2px); box-shadow: 6px 6px 0px 0px #000; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; transform: none; }
+
+    .footer { display: flex; justify-content: space-between; align-items: center; margin-top: 40px; }
+    .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #111; color: #fff; padding: 15px 30px; border-radius: 50px; font-size: 1rem; font-weight: 600; opacity: 0; transition: all 0.3s ease; z-index: 10000; }
+    .toast.show { opacity: 1; bottom: 40px; }
+
+    @media (max-width: 768px) {
+      .card { padding: 2rem 1.5rem; }
+      .q-item { flex-direction: column; align-items: flex-start; gap: 1.2rem; }
+      .options-row { width: 100%; justify-content: space-between; }
+      .scale-header { display: none; }
+      .rec-grid { grid-template-columns: 1fr; }
+      .insight-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 
@@ -408,10 +511,10 @@
         const top = sorted[0], secondary = sorted[1]||top;
         const profile = JSON.parse(localStorage.getItem('kareer_profile')||'{"name":"Bạn"}');
 
-        const renderSection = (title, icon, data, descKey) => {
+        const renderSection = (title, data, descKey) => {
           return `
             <div class="theory-section">
-              <div class="theory-section-hdr"><span>${icon} ${title}</span></div>
+              <div class="theory-section-hdr"><span>${title}</span></div>
               <div class="dim-list">
                 ${Object.entries(data).map(([key, val]) => {
                   const descIdx = val.pct >= 70 ? 2 : (val.pct >= 40 ? 1 : 0);
@@ -444,9 +547,9 @@
           <div class="insight-grid">${insightBlocks.map((b,idx)=>`<div class="insight-block"><h4 style="font-weight:900; margin-bottom:15px; text-transform:uppercase; border-bottom:2px solid #eee; padding-bottom:8px;">${b.label}</h4><ul class="insight-list">${b.items.map(it=>`<li>${it}</li>`).join('')}</ul></div>`).join('')}</div>
           <div class="theory-box">
             <h2 class="theory-title">PHÂN TÍCH THEO MÔ HÌNH KHOA HỌC</h2>
-            ${renderSection("Mô hình RIASEC", "🎯", riasec, "riasec")}
-            ${renderSection("Mô hình BIG FIVE", "🧠", bigFive, "bigFive")}
-            ${renderSection("Mô hình SCHWARTZ", "💎", schwartz, "schwartz")}
+            ${renderSection("Mô hình RIASEC", riasec, "riasec")}
+            ${renderSection("Mô hình BIG FIVE", bigFive, "bigFive")}
+            ${renderSection("Mô hình SCHWARTZ", schwartz, "schwartz")}
           </div>
 
           <div class="recommendation-box">
