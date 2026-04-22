@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trắc Nghiệm Định Hướng Nghề Nghiệp</title>
+  <meta name="description"
+    content="Khám phá định hướng nghề nghiệp phù hợp với bản thân qua 35 câu hỏi trắc nghiệm khoa học.">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --font-main: 'Inter', sans-serif;
+      --font-heading: 'Instrument Sans', sans-serif;
+      --bg-color: #f2f2f2;
+      --bg-white: #ffffff;
+      --text-black: #111111;
+      --text-muted: #8c9aaf;
+      --text-secondary: #555555;
+      --border-color: #e0e0e0;
+      --accent: #000000;
+      --accent-hover: #333333;
+      --shadow-sm: 0 4px 15px rgba(0,0,0,0.04);
+      --shadow-md: 0 8px 30px rgba(0,0,0,0.06);
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-full: 999px;
+      --transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+
+      --primary-yellow: #f0f0f0;
+      --primary-pink: #111111;
+      --primary-mint: #e8e8e8;
+      --border-width: 1px;
+      --card-shadow: var(--shadow-md);
+      --success: #4caf50;
+      --danger: #e53935;
+      --radius: 12px;
+    }
+
+    /* ─── HEADER / LOGO ─── */
+    .main-header {
+      position: fixed;
+      top: 1.5rem;
+      left: 2rem;
+      z-index: 1000;
+    }
+
+    .main-logo {
+      height: 72px;
+      width: auto;
+      display: block;
+      transition: var(--transition);
+      mix-blend-mode: multiply;
+    }
+
+    @media (max-width: 768px) {
+      .main-header { top: 1rem; left: 1rem; }
+      .main-logo { height: 48px; }
+    }
+
+    body {
+      font-family: var(--font-main);
+      background: var(--bg-color);
+      color: var(--text-black);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+    }
+
+    .quiz-container {
+      max-width: 1200px;
+      margin: 60px auto;
+      width: 100%;
+      padding: 0 30px;
+    }
+
+    .card {
+      position: relative;
+      width: 100%;
+    }
+
+    .progress-shell {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 6px;
+      background: var(--border-color);
+      z-index: 9999;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+
+    /* Question Item */
+    .q-item {
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      background: var(--bg-white);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      margin-bottom: 24px;
+    }
+
+    .q-item.answered { border-color: var(--success); background: #fafaf9; }
+    .q-item.error { border-color: var(--danger); animation: shake 0.4s ease; }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      75% { transform: translateX(6px); }
+    }
+
+    .q-text { font-size: 1.1rem; font-weight: 500; color: var(--text-black); flex: 1; }
+
+    .options-row {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      flex-shrink: 0;
+      width: 196px;
+      justify-content: space-between;
+    }
+
+    .opt-label { cursor: pointer; position: relative; }
+    .opt-label input { position: absolute; opacity: 0; width: 0; height: 0; }
+
+    .opt-circle {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border-color);
+      background: var(--bg-white);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .opt-label:hover .opt-circle { border-color: var(--accent); transform: scale(1.1); }
+    .opt-label input:checked + .opt-circle { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,0,0,0.1); }
+
+    .scale-header {
+      display: flex;
+      justify-content: flex-end;
+      gap: 24px;
+      margin-bottom: 20px;
+      padding-right: 1.5rem;
+    }
+    .scale-label {
+      width: 20px;
+      text-align: center;
+      font-size: 0.52rem;
+      font-weight: 800;
+      color: #94a3b8;
+      text-transform: uppercase;
+      line-height: 1.1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      letter-spacing: 0.08em;
+    }
+
+    /* Results UI */
+    .result-screen { display: none; }
+    .result-hdr { text-align: center; margin-bottom: 40px; }
+    .result-title { font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 900; text-transform: uppercase; }
+
+    .insight-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+      margin-bottom: 50px;
+    }
+
+    .insight-block {
+      background: white;
+      border-radius: 16px;
+      padding: 30px 20px;
+      box-shadow: 8px 8px 0px 0px #000;
+      border: 3px solid #000;
+    }
+
+    .insight-list { list-style: none; padding: 0; margin: 0; }
+    .insight-list li { font-size: 0.95rem; line-height: 1.6; padding-left: 1.5rem; position: relative; margin-bottom: 10px; }
+    .insight-list li::before { content: '→'; position: absolute; left: 0; font-weight: bold; }
+
+    /* Scientific Models */
+    .theory-box {
+      background: var(--bg-white);
+      border: 3px solid var(--text-black);
+      border-radius: 12px;
+      padding: 35px 25px;
+      margin-top: 50px;
+      margin-bottom: 50px;
+      box-shadow: 10px 10px 0px 0px rgba(0,0,0,1);
+    }
+
+    .theory-title { font-size: 1.4rem; font-weight: 900; margin-bottom: 30px; text-transform: uppercase; border-bottom: 3px solid var(--text-black); padding-bottom: 15px; }
+
+    .theory-section { border: 2px solid var(--text-black); border-radius: 12px; background: #fafafa; padding: 25px 20px; margin-bottom: 30px; }
+    .theory-section-hdr { font-weight: 900; font-size: 1.2rem; margin-bottom: 20px; border-bottom: 1.5px dashed #ccc; padding-bottom: 10px; }
+
+    .dim-item { padding: 20px; background: white; border: 2px solid #eee; border-radius: 10px; margin-bottom: 15px; }
+    .dim-item-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .dim-label { font-weight: 800; font-size: 1rem; }
+    .dim-badge { font-weight: 800; padding: 5px 15px; border-radius: 8px; font-size: 0.75rem; text-transform: uppercase; }
+
+    .dim-bar-track { height: 10px; background: #f0f0f0; border-radius: 5px; overflow: hidden; margin-bottom: 12px; border: 1px solid #ddd; }
+    .dim-bar-fill { height: 100%; transition: width 1s ease-out; }
+
+    .val-vhigh { background: #111; color: white; }
+    .val-med   { background: #666; color: white; }
+    .val-low   { background: #999; color: white; }
+
+    /* Recommendation Box */
+    .recommendation-box {
+      background: #fff;
+      border: 3px solid #000;
+      border-radius: 16px;
+      padding: 40px 25px;
+      margin-top: 50px;
+      margin-bottom: 50px;
+      box-shadow: 12px 12px 0px 0px #000;
+    }
+
+    .rec-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-top: 30px;
+    }
+
+    .rec-item {
+      padding: 25px;
+      border-radius: 12px;
+      border: 2px solid #000;
+    }
+
+    .rec-suitable { background: #f0faf0; border-color: #2e7d32; }
+    .rec-unsuitable { background: #fff5f5; border-color: #c62828; }
+
+    .rec-title { font-weight: 900; text-transform: uppercase; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+
+    /* Buttons */
+    .btn {
+      padding: 1rem 2.5rem; border-radius: 999px; font-weight: 800; font-size: 0.95rem; cursor: pointer; border: 3px solid var(--text-black); text-transform: uppercase; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 10px; box-shadow: 4px 4px 0px 0px #000;
+    }
+    .btn-primary { background: var(--accent); color: white; }
+    .btn-ghost { background: transparent; color: var(--text-black); box-shadow: none; border-width: 2px; }
+    .btn:hover:not(:disabled) { transform: translate(-2px, -2px); box-shadow: 6px 6px 0px 0px #000; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; transform: none; }
+
+    .footer { display: flex; justify-content: space-between; align-items: center; margin-top: 40px; }
+    .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #111; color: #fff; padding: 15px 30px; border-radius: 50px; font-size: 1rem; font-weight: 600; opacity: 0; transition: all 0.3s ease; z-index: 10000; }
+    .toast.show { opacity: 1; bottom: 40px; }
+
+    @media (max-width: 768px) {
+      .card { padding: 2rem 1.5rem; }
+      .q-item { flex-direction: column; align-items: flex-start; gap: 1.2rem; }
+      .options-row { width: 100%; justify-content: space-between; }
+      .scale-header { display: none; }
+      .rec-grid { grid-template-columns: 1fr; }
+      .insight-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="shell">
+    <header class="main-header">
+      <a href="/">
+        <img src="../logo.png" alt="Kareer Logo" class="main-logo">
+      </a>
+    </header>
+
+    <div class="progress-shell" id="progressShell">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <div class="quiz-container">
+      <div class="card">
+        <div class="hdr" id="hdrBlock">
+          <h1 style="font-size: 1.8rem; font-weight: 900; text-transform: uppercase; letter-spacing: -0.03em; margin-bottom: 2.5rem; line-height: 1.2; text-align: center;">Khám Phá Bản Sắc Nghề Nghiệp</h1>
+        </div>
+
+        <div class="q-area" id="questionArea"></div>
+
+        <div class="footer" id="quizFooter">
+          <button class="btn btn-ghost" id="prevBtn" onclick="window.location.href='/'">Trang chủ</button>
+          <button class="btn btn-primary" id="nextBtn" onclick="goNext()">Xem kết quả</button>
+        </div>
+
+        <div class="result-screen" id="resultScreen">
+          <div class="result-hdr">
+            <h2 class="result-title">PHÂN TÍCH BẢN SẮC NGHỀ NGHIỆP</h2>
+          </div>
+          <div class="result-body" id="resultBody"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="../config.js"></script>
+  <script src="../api-client.js"></script>
+  <script>
+    // ============================
+    //  DATA
+    // ============================
+    const questions = [
+      { text: "Tôi thích dành thời gian để thiết kế ứng dụng, đồ họa, video hoặc tạo nội dung sáng tạo.", group: "creative" },
+      { text: "Tôi cảm thấy hào hứng khi thử nghiệm những ý tưởng mới dù chưa chắc chắn sẽ thành công.", group: "creative" },
+      { text: "Tôi thích viết lách, vẽ tranh, chụp ảnh hoặc sáng tác theo phong cách riêng của mình.", group: "creative" },
+      { text: "Tôi thích dẫn dắt nhóm và thuyết phục mọi người thực hiện ý tưởng của mình.", group: "leader" },
+      { text: "Tôi cảm thấy động lực khi đạt được thành tích cao và được người khác công nhận.", group: "leader" },
+      { text: "Tôi thích tổ chức sự kiện, gây quỹ hoặc bán hàng.", group: "leader" },
+      { text: "Tôi cảm thấy thoải mái khi làm việc theo quy trình rõ ràng và ổn định.", group: "order" },
+      { text: "Tôi thường kiểm tra lỗi cẩn thận và hoàn thành công việc đúng hạn.", group: "order" },
+      { text: "Tôi thích làm bảng tính chi tiết, lập kế hoạch và quản lý dữ liệu.", group: "order" },
+      { text: "Tôi thường dừng lại để lắng nghe và hỗ trợ bạn bè khi họ gặp khó khăn.", group: "social" },
+      { text: "Tôi thích tham gia tình nguyện hoặc hoạt động giúp đỡ cộng đồng.", group: "social" },
+      { text: "Tôi cảm thấy ý nghĩa khi làm việc giúp đỡ nhiều người hoặc cải thiện xã hội.", group: "social" },
+      { text: "Tôi thích sửa chữa máy móc, lắp ráp đồ dùng hoặc làm việc với tay chân.", group: "technical" },
+      { text: "Tôi thích làm việc ngoài trời với dụng cụ hoặc máy móc.", group: "technical" },
+      { text: "Tôi thích phân tích dữ liệu hoặc tìm hiểu nguyên nhân gốc rễ của vấn đề.", group: "analyst" },
+      { text: "Tôi thích đọc sách hoặc nghiên cứu vấn đề phức tạp.", group: "analyst" },
+      { text: "Tôi thích học những kiến thức hoặc kỹ năng hoàn toàn mới lạ.", group: "analyst" },
+      { text: "Tôi coi trọng việc được tự do quyết định cách làm việc theo ý mình.", group: "creative" },
+      { text: "Tôi muốn công việc mang lại thu nhập tốt và cơ hội thăng tiến rõ ràng.", group: "leader" },
+      { text: "Tôi coi trọng sự ổn định và an ninh lâu dài trong công việc.", group: "order" },
+      { text: "Tôi quan tâm đến việc giữ gìn truyền thống gia đình và tuân thủ quy tắc xã hội.", group: "order" },
+      { text: "Tôi muốn công việc của mình đóng góp cho cộng đồng hoặc đất nước.", group: "social" },
+      { text: "Tôi là người năng động và thích gặp gỡ, nói chuyện với nhiều người.", group: "leader" },
+      { text: "Tôi hay lo lắng và dễ stress khi có thay đổi lớn.", group: "order" },
+      { text: "Tôi thường hy sinh thời gian cá nhân để giúp đỡ đồng nghiệp hoặc bạn bè.", group: "social" },
+      { text: "Tôi thích thử thách bản thân và trải nghiệm phiêu lưu.", group: "creative" },
+      { text: "Tôi thường quên thời gian khi làm việc sáng tạo hoặc giúp đỡ người khác.", group: "creative" },
+      { text: "Tôi tự tin nhất ở kỹ năng sáng tạo, thiết kế hoặc viết lách.", group: "creative" },
+      { text: "Tôi muốn đóng góp cho lĩnh vực giáo dục, môi trường hoặc công nghệ hỗ trợ xã hội.", group: "social" },
+      { text: "Tôi sẵn sàng học thêm kỹ năng để kiếm tiền từ những điều mình đam mê.", group: "creative" },
+      { text: "Tôi thích công việc cho phép thể hiện ý tưởng cá nhân một cách tự do.", group: "creative" },
+      { text: "Tôi thấy hạnh phúc khi thấy người khác tiến bộ nhờ sự giúp đỡ của mình.", group: "social" },
+      { text: "Tôi thích công việc có cơ hội cạnh tranh và thăng tiến nhanh.", group: "leader" },
+      { text: "Tôi cảm thấy thoải mái nhất khi mọi thứ diễn ra theo kế hoạch rõ ràng.", group: "order" },
+      { text: "Tôi mong muốn sự nghiệp tương lai của mình mang lại cả ý nghĩa cá nhân lẫn lợi ích cho xã hội.", group: "social" }
+    ];
+
+    const groupInfo = {
+      creative: { name: "Sáng Tạo & Nghệ Thuật", narrative: "Bạn là người sống bằng cảm xúc và hình ảnh. Tâm trí bạn luôn vận động — liên tục phác thảo, kết nối ý tưởng và tìm cách biến chúng thành điều gì đó hữu hình.", traits: ["Giàu trí tưởng tượng", "Nhạy cảm với cái đẹp", "Thích tự do cá nhân"], strengths: ["Tạo ra ý tưởng mới", "Kể chuyện hấp dẫn", "Thích nghi linh hoạt"], weaknesses: ["Dễ trì hoãn", "Khó làm việc gò bó"], potential: ["Xây dựng thương hiệu cá nhân", "Khởi nghiệp sáng tạo"] },
+      leader: { name: "Lãnh Đạo & Kinh Doanh", narrative: "Bạn sinh ra để đứng ở vị trí dẫn đầu. Bạn không chỉ nhìn thấy cơ hội mà còn biết cách biến chúng thành hành động cụ thể.", traits: ["Tự tin, quyết đoán", "Giỏi đọc người", "Tư duy chiến lược"], strengths: ["Truyền động lực đội nhóm", "Ra quyết định nhanh", "Đàm phán thuyết phục"], weaknesses: ["Thiếu kiên nhẫn tiểu tiết", "Muốn kiểm soát"], potential: ["Xây dựng startup", "Quản lý cấp cao"] },
+      social: { name: "Hỗ Trợ & Cộng Đồng", narrative: "Trái tim bạn hướng về con người. Bạn cảm nhận được nhu cầu của người khác và điều đó khiến bạn trở thành người mà ai cũng muốn tìm đến khi khó khăn.", traits: ["Đồng cảm sâu sắc", "Lắng nghe chủ động", "Coi trọng cộng đồng"], strengths: ["Hòa giải xung đột", "Giáo dục truyền đạt", "Duy trì niềm tin"], weaknesses: ["Khó nói 'không'", "Dễ bị choáng ngợp"], potential: ["Mentor/Coach chuyên nghiệp", "Lãnh đạo tổ chức xã hội"] },
+      order: { name: "Tổ Chức & Hành Chính", narrative: "Bạn là người giữ cho mọi thứ vận hành trơn tru. Bạn có kế hoạch, chia nhỏ công việc và theo dõi từng bước tiến độ.", traits: ["Ngăn nắp, cẩn thận", "Tôn trọng quy tắc", "Thích sự ổn định"], strengths: ["Quản lý quy trình", "Phát hiện lỗi/rủi ro", "Lập kế hoạch chi tiết"], weaknesses: ["Khó thích nghi đột ngột", "Cầu toàn quá mức"], potential: ["Chuyên gia vận hành", "Quản trị doanh nghiệp"] },
+      analyst: { name: "Phân Tích & Nghiên Cứu", narrative: "Bạn không hài lòng với câu trả lời trên bề mặt. Bạn muốn hiểu tại sao, như thế nào, và từ đâu — rồi dùng những hiểu biết đó để tạo ra giải pháp vượt trội.", traits: ["Tư duy logic", "Kiên nhẫn đào sâu", "Khách quan"], strengths: ["Khám phá insight", "Giải quyết vấn đề phức tạp", "Học nhanh kỹ thuật"], weaknesses: ["Overthinking", "Ít chú trọng cảm xúc"], potential: ["Dẫn đầu AI/Dữ liệu", "Chuyên gia tư vấn"] },
+      technical: { name: "Kỹ Thuật & Thực Hành", narrative: "Bạn tin vào những gì có thể chạm tay vào, đo lường và kiểm tra được. Sự thực dụng và khéo léo của bạn là nền tảng của thực tế.", traits: ["Thực tiễn", "Tỉ mỉ chính xác", "Hành động hơn lý thuyết"], strengths: ["Vận hành bảo trì", "Sửa lỗi kỹ thuật", "Thích nghi công nghệ mới"], weaknesses: ["Ít thoải mái định tính", "Ngại giao tiếp đám đông"], potential: ["Chuyên gia kỹ thuật cao", "Kỹ sư hệ thống"] }
+    };
+
+    const conclusionData = {
+      creative: {
+        conclusion: "Bạn là một người có tâm hồn tự do, khao khát cái đẹp và sự đổi mới. Bản sắc nghề nghiệp của bạn được định nghĩa bởi khả năng biến những ý niệm trừu tượng thành những sản phẩm hữu hình đầy cảm hứng. Bạn không chỉ làm việc để kiếm sống, mà làm việc để kiến tạo và để lại dấu ấn cá nhân trong mọi dự án bạn tham gia.",
+        suitable: ["Môi trường làm việc linh hoạt, ít gò bó", "Các dự án yêu cầu tư duy đột phá và giải pháp mới", "Cơ hội được thể hiện phong cách và bản sắc cá nhân", "Làm việc với những người có chung niềm đam mê sáng tạo"],
+        unsuitable: ["Công việc lặp đi lặp lại theo chu kỳ ngắn", "Hệ thống quy trình kiểm soát gắt gao và thiếu sự linh động", "Môi trường đặt nặng các con số khô khan hơn là giá trị thẩm mỹ", "Thiếu không gian để thử nghiệm các ý tưởng mới"]
+      },
+      leader: {
+        conclusion: "Bạn là một chiến lược gia bẩm sinh với tầm nhìn xa và khả năng dẫn dắt mạnh mẽ. Bản sắc của bạn nằm ở việc tạo ra ảnh hưởng và định hướng cho đám đông. Bạn cảm thấy hưng phấn nhất khi đối mặt với những thử thách lớn và có quyền tự chủ trong việc ra quyết định. Sự tự tin và quyết đoán của bạn là ngọn hải đăng cho đội ngũ.",
+        suitable: ["Vị trí có quyền ra quyết định và chịu trách nhiệm", "Môi trường cạnh tranh cao, đề cao kết quả và thành tích", "Các dự án xây dựng chiến lược và mở rộng quy mô", "Cơ hội được huấn luyện và truyền động lực cho người khác"],
+        unsuitable: ["Công việc thừa hành thuần túy, không có quyền can thiệp", "Môi trường thiếu sự thăng tiến và lộ trình công danh mờ nhạt", "Thiếu quyền tự chủ và bị giám sát quá chi tiết", "Công việc không mang tính thử thách trí tuệ và quyền lực"]
+      },
+      social: {
+        conclusion: "Trái tim bạn luôn hướng về giá trị con người. Bản sắc nghề nghiệp của bạn được xây dựng trên sự thấu cảm, lòng trắc ẩn và khả năng kết nối tuyệt vời. Bạn là chất keo gắn kết mọi tổ chức, người luôn lắng nghe và tìm cách nâng đỡ người khác. Hạnh phúc của bạn gắn liền với sự tiến bộ và hạnh phúc của cộng đồng xung quanh.",
+        suitable: ["Công việc tương tác trực tiếp và hỗ trợ con người", "Môi trường làm việc mang tính hợp tác và chia sẻ", "Các lĩnh vực liên quan đến giáo dục, tâm lý, y tế hoặc cộng đồng", "Môi trường đề cao các giá trị đạo đức và nhân văn"],
+        unsuitable: ["Làm việc hoàn toàn độc lập hoặc chỉ tương tác với máy móc", "Môi trường cạnh tranh gay gắt, đặt lợi nhuận trên con người", "Công việc thiếu đi sự tương tác xã hội và ý nghĩa nhân văn", "Môi trường làm việc lạnh lùng và thiếu sự đồng cảm"]
+      },
+      order: {
+        conclusion: "Bạn là 'xương sống' đáng tin cậy của mọi tổ chức. Bản sắc của bạn được định nghĩa bởi sự kỷ luật, ngăn nắp và lòng trung thực tuyệt đối. Bạn có khả năng đưa mọi thứ từ hỗn loạn vào trật tự một cách kỳ diệu. Sự tỉ mỉ và tôn trọng quy trình của bạn đảm bảo mọi hệ thống luôn vận hành ở trạng thái tối ưu nhất.",
+        suitable: ["Công việc có quy trình rõ ràng và mục tiêu cụ thể", "Môi trường ổn định, chuyên nghiệp và có tính kế hoạch cao", "Quản lý dữ liệu, vận hành hệ thống hoặc kiểm soát chất lượng", "Các tổ chức đề cao sự trung thực và tính chuẩn mực"],
+        unsuitable: ["Sự thay đổi đột ngột liên tục và thiếu kế hoạch", "Công việc có tính mơ hồ cao, không có quy tắc rõ ràng", "Môi trường thiếu kỷ luật và quản lý lỏng lẻo", "Các tình huống đòi hỏi rủi ro cao và thiếu dữ liệu kiểm chứng"]
+      },
+      analyst: {
+        conclusion: "Bạn sở hữu một bộ óc phân tích sắc bén và khao khát tìm hiểu bản chất của mọi vấn đề. Bản sắc nghề nghiệp của bạn nằm ở sự khách quan, logic và khả năng nhìn thấy những quy luật ẩn sau các hiện tượng. Bạn không chấp nhận những câu trả lời hời hợt và luôn nỗ lực tìm kiếm giải pháp tối ưu nhất dựa trên dữ liệu.",
+        suitable: ["Công việc giải quyết các vấn đề phức tạp và hóc búa", "Môi trường nghiên cứu, phân tích dữ liệu hoặc tư vấn chiến lược", "Lĩnh vực công nghệ cao, khoa học hoặc tài chính định lượng", "Cơ hội được làm việc độc lập để tập trung đào sâu kiến thức"],
+        unsuitable: ["Các quyết định dựa trên cảm tính hoặc trực giác thiếu căn cứ", "Công việc hời hợt, chỉ giải quyết phần ngọn của vấn đề", "Môi trường thiếu sự logic và không tôn trọng dữ liệu thực tế", "Công việc yêu cầu tương tác xã hội quá nhiều và liên tục"]
+      },
+      technical: {
+        conclusion: "Bạn là người của hành động và sự thực tiễn. Bản sắc của bạn được xây dựng trên sự khéo léo, thực dụng và khả năng làm chủ công nghệ/công cụ. Bạn tin vào những gì có thể đo lường và kiểm chứng được. Sự tỉ mỉ và kiên trì trong việc vận hành và sửa chữa giúp bạn trở thành chuyên gia không thể thay thế trong lĩnh vực của mình.",
+        suitable: ["Công việc vận hành máy móc, hệ thống hoặc công cụ kỹ thuật", "Môi trường làm việc thực tế, ngoài hiện trường hoặc phòng lab", "Các dự án có kết quả đầu ra rõ ràng và cụ thể", "Công việc yêu cầu sự chính xác cao về mặt kỹ thuật"],
+        unsuitable: ["Lý thuyết suông, trừu tượng và thiếu tính ứng dụng", "Môi trường làm việc văn phòng gò bó và thiếu sự thực tiễn", "Quá nhiều thủ tục hành chính rườm rà và họp hành vô ích", "Thiếu các công cụ và hạ tầng kỹ thuật chuyên nghiệp"]
+      }
+    };
+
+    const dimDesc = {
+      riasec: {
+        realistic: ['Ít thích làm việc tay chân.', 'Thoải mái với thực hành.', 'Thích sửa chữa, xây dựng.'],
+        investigative: ['Ít hứng thú nghiên cứu.', 'Tư duy phân tích vừa phải.', 'Đam mê khoa học, nghiên cứu.'],
+        artistic: ['Ít thiên hướng nghệ thuật.', 'Có năng khiếu sáng tạo.', 'Sống bằng sự sáng tạo.'],
+        social: ['Thích làm việc độc lập.', 'Cân bằng giữa mình và người.', 'Sinh ra để phục vụ con người.'],
+        enterprising: ['Ít hứng thú lãnh đạo.', 'Có tinh thần doanh nhân.', 'Dẫn dắt và gây ảnh hưởng mạnh.'],
+        conventional: ['Thích môi trường linh hoạt.', 'Cân bằng nguyên tắc.', 'Ngăn nắp và chính xác cao.']
+      },
+      bigFive: {
+        openness: ['Thích sự quen thuộc.', 'Trí tưởng tượng vừa phải.', 'Cực kỳ cởi mở, sáng tạo.'],
+        conscientiousness: ['Làm việc theo cảm hứng.', 'Có tổ chức, kỷ luật.', 'Kỷ luật xuất sắc, tận tâm.'],
+        extraversion: ['Người hướng nội.', 'Linh hoạt hướng nội/ngoại.', 'Cực kỳ hướng ngoại.'],
+        agreeableness: ['Thẳng thắn, thực dụng.', 'Cân bằng đồng cảm.', 'Trái tim rộng mở, vị tha.'],
+        neuroticism: ['Ổn định cảm xúc cao.', 'Đôi khi áp lực.', 'Dễ bị stress, nhạy cảm.']
+      },
+      schwartz: {
+        selfDirection: ['Thích theo hướng dẫn.', 'Cân bằng tự chủ.', 'Coi trọng sự tự chủ cao.'],
+        stimulation: ['Thích sự ổn định.', 'Thích thử thách vừa phải.', 'Đam mê phiêu lưu, mới mẻ.'],
+        hedonism: ['Ít đặt nặng đam mê.', 'Hưởng thụ hợp lý.', 'Sống theo đam mê cá nhân.'],
+        achievement: ['Ít cần sự công nhận.', 'Muốn đạt được mục tiêu.', 'Cực kỳ hướng đến thành tích.'],
+        power: ['Ít hứng thú địa vị.', 'Mong muốn địa vị vừa phải.', 'Khao khát quyền lực, lãnh đạo.'],
+        security: ['Thoải mái với thay đổi.', 'Cân bằng ổn định.', 'Đặt an toàn lên hàng đầu.'],
+        conformity: ['Xu hướng tự do.', 'Tuân thủ trong khuôn khổ.', 'Rất coi trọng kỷ luật.'],
+        tradition: ['Sẵn sàng thay đổi.', 'Trân trọng di sản.', 'Gắn bó chặt chẽ truyền thống.'],
+        benevolence: ['Thực tế với người quen.', 'Giúp đỡ có chừng mực.', 'Rất tận tâm giúp người.'],
+        universalism: ['Ít quan tâm xã hội.', 'Có trách nhiệm cộng đồng.', 'Lý tưởng hóa công bằng xã hội.']
+      }
+    };
+
+    let answers = new Array(35).fill(null);
+
+    // ============================
+    //  CORE LOGIC
+    // ============================
+    function renderPage() {
+      const area = document.getElementById('questionArea');
+      let html = `<div class="scale-header">${['RẤT ĐÚNG','KHÁ ĐÚNG','BÌNH THƯỜNG','ÍT ĐÚNG','KHÔNG ĐÚNG'].map(l=>`<div class="scale-label">${l.split(' ').map(s=>`<span>${s}</span>`).join('')}</div>`).join('')}</div><div class="questions-list">`;
+      questions.forEach((q, i) => {
+        html += `<div class="q-item" id="q-${i}"><div class="q-text">${q.text}</div><div class="options-row">${[5,4,3,2,1].map(s=>`<label class="opt-label"><input type="radio" name="q-${i}" value="${s}" ${answers[i]===s?'checked':''} onchange="saveAns(${i}, ${s})"><div class="opt-circle"></div></label>`).join('')}</div></div>`;
+      });
+      area.innerHTML = html + `</div>`;
+    }
+
+    function saveAns(i, s) { answers[i] = s; document.getElementById(`q-${i}`).classList.add('answered'); updateProgress(); }
+    function updateProgress() { document.getElementById('progressFill').style.width = (answers.filter(a=>a!==null).length/35*100) + '%'; }
+
+    function goNext() {
+      const missing = answers.map((a,i)=>a===null?i:-1).filter(i=>i!==-1);
+      if (missing.length > 0) {
+        showToast(`Bạn còn ${missing.length} câu chưa làm`);
+        const first = document.getElementById(`q-${missing[0]}`);
+        if (first) { first.scrollIntoView({ behavior:'smooth', block:'center'}); first.classList.add('error'); setTimeout(()=>first.classList.remove('error'),800); }
+        return;
+      }
+      showResult();
+    }
+
+    function showResult() {
+      try {
+        const a = answers;
+        const scoreModel = (items) => {
+          let raw = 0, max = 0;
+          items.forEach(it => { raw += (it.w > 0 ? a[it.qi] : (6 - a[it.qi])); max += 5; });
+          return Math.round((raw / max) * 100);
+        };
+        const getLv = (pct) => {
+          if (pct >= 70) return { text: 'Cao', class: 'val-vhigh', pct };
+          if (pct >= 40) return { text: 'Trung bình', class: 'val-med', pct };
+          return { text: 'Thấp', class: 'val-low', pct };
+        };
+
+        const riasec = {
+          realistic: getLv(scoreModel([{qi:12,w:1},{qi:13,w:1}])),
+          investigative: getLv(scoreModel([{qi:14,w:1},{qi:15,w:1},{qi:16,w:1},{qi:1,w:1}])),
+          artistic: getLv(scoreModel([{qi:0,w:1},{qi:1,w:1},{qi:2,w:1},{qi:17,w:1},{qi:25,w:1},{qi:27,w:1}])),
+          social: getLv(scoreModel([{qi:9,w:1},{qi:10,w:1},{qi:11,w:1},{qi:21,w:1},{qi:24,w:1}])),
+          enterprising: getLv(scoreModel([{qi:3,w:1},{qi:4,w:1},{qi:5,w:1},{qi:18,w:1},{qi:32,w:1}])),
+          conventional: getLv(scoreModel([{qi:6,w:1},{qi:7,w:1},{qi:8,w:1},{qi:19,w:1},{qi:20,w:1}]))
+        };
+
+        const bigFive = {
+          openness: getLv(scoreModel([{qi:0,w:1},{qi:1,w:1},{qi:2,w:1},{qi:15,w:1},{qi:25,w:1}])),
+          conscientiousness: getLv(scoreModel([{qi:6,w:1},{qi:7,w:1},{qi:8,w:1},{qi:33,w:1}])),
+          extraversion: getLv(scoreModel([{qi:3,w:1},{qi:5,w:1},{qi:22,w:1},{qi:32,w:1}])),
+          agreeableness: getLv(scoreModel([{qi:9,w:1},{qi:11,w:1},{qi:24,w:1},{qi:31,w:1}])),
+          neuroticism: getLv(scoreModel([{qi:23,w:1}]))
+        };
+
+        const schwartz = {
+          selfDirection: getLv(scoreModel([{qi:0,w:1},{qi:17,w:1}])),
+          stimulation: getLv(scoreModel([{qi:1,w:1},{qi:25,w:1}])),
+          hedonism: getLv(scoreModel([{qi:26,w:1}])),
+          achievement: getLv(scoreModel([{qi:4,w:1},{qi:18,w:1}])),
+          power: getLv(scoreModel([{qi:3,w:1},{qi:32,w:1}])),
+          security: getLv(scoreModel([{qi:6,w:1},{qi:19,w:1}])),
+          conformity: getLv(scoreModel([{qi:20,w:1},{qi:7,w:1}])),
+          tradition: getLv(scoreModel([{qi:20,w:1}])),
+          benevolence: getLv(scoreModel([{qi:9,w:1},{qi:24,w:1}])),
+          universalism: getLv(scoreModel([{qi:11,w:1},{qi:10,w:1}]))
+        };
+
+        const scores = {};
+        questions.forEach((q,i) => scores[q.group] = (scores[q.group]||0) + a[i]);
+        const sorted = Object.keys(scores).sort((a,b)=>scores[b]-scores[a]);
+        const top = sorted[0], secondary = sorted[1]||top;
+        const profile = JSON.parse(localStorage.getItem('kareer_profile')||'{"name":"Bạn"}');
+
+        const renderSection = (title, icon, data, descKey) => {
+          return `
+            <div class="theory-section">
+              <div class="theory-section-hdr"><span>${icon} ${title}</span></div>
+              <div class="dim-list">
+                ${Object.entries(data).map(([key, val]) => {
+                  const descIdx = val.pct >= 70 ? 2 : (val.pct >= 40 ? 1 : 0);
+                  const desc = dimDesc[descKey][key][descIdx];
+                  return `
+                    <div class="dim-item">
+                      <div class="dim-item-top"><span class="dim-label">${key.toUpperCase()}</span><span class="dim-badge ${val.class}">${val.text} (${val.pct}%)</span></div>
+                      <div class="dim-bar-track"><div class="dim-bar-fill ${val.class}" style="width: ${val.pct}%"></div></div>
+                      <p class="dim-desc">${desc}</p>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+          `;
+        };
+
+        const insightBlocks = [
+          { label: 'Đặc điểm cá nhân', items: [groupInfo[top].traits[0], groupInfo[secondary].traits[0], "Tư duy linh hoạt"] },
+          { label: 'Thế mạnh cốt lõi', items: [groupInfo[top].strengths[0], groupInfo[top].strengths[1] || groupInfo[top].strengths[0], "Khả năng thích ứng"] },
+          { label: 'Hạn chế cần lưu ý', items: [groupInfo[top].weaknesses[0], "Cần rèn luyện tính kiên nhẫn"] },
+          { label: 'Tiềm năng đột phá', items: [groupInfo[top].potential[0], "Phát triển đa năng"] }
+        ];
+
+        document.getElementById('resultBody').innerHTML = `
+          <div style="background:#fff; border:3px solid #000; padding:30px; margin-bottom:30px; border-radius:12px; box-shadow:8px 8px 0px 0px #000;">
+            <h3 style="margin-bottom:20px; font-weight:900; text-transform:uppercase;">KẾT QUẢ DÀNH CHO ${(profile.name||"BẠN").toUpperCase()}</h3>
+            <p style="font-size:1.1rem;">Bạn thuộc nhóm chủ đạo <strong>${groupInfo[top].name}</strong>. ${groupInfo[top].narrative}</p>
+          </div>
+          <div class="insight-grid">${insightBlocks.map((b,idx)=>`<div class="insight-block"><h4 style="font-weight:900; margin-bottom:15px; text-transform:uppercase; border-bottom:2px solid #eee; padding-bottom:8px;">${b.label}</h4><ul class="insight-list">${b.items.map(it=>`<li>${it}</li>`).join('')}</ul></div>`).join('')}</div>
+          <div class="theory-box">
+            <h2 class="theory-title">PHÂN TÍCH THEO MÔ HÌNH KHOA HỌC</h2>
+            ${renderSection("Mô hình RIASEC", "🎯", riasec, "riasec")}
+            ${renderSection("Mô hình BIG FIVE", "🧠", bigFive, "bigFive")}
+            ${renderSection("Mô hình SCHWARTZ", "💎", schwartz, "schwartz")}
+          </div>
+
+          <div class="recommendation-box">
+            <h2 class="theory-title" style="border-bottom:3px solid #000;">KẾT LUẬN & KHUYẾN NGHỊ</h2>
+            <div style="margin-bottom: 30px;">
+              <h3 style="font-weight: 900; text-transform: uppercase; margin-bottom: 15px; font-size: 1.1rem;">Bản sắc nghề nghiệp của bạn</h3>
+              <p style="font-size: 1.05rem; line-height: 1.8; color: #333;">${conclusionData[top].conclusion}</p>
+            </div>
+            
+            <div class="rec-grid">
+              <div class="rec-item rec-suitable">
+                <div class="rec-title" style="color: #2e7d32;"><span>✅ Phù hợp nhất với</span></div>
+                <ul class="insight-list">
+                  ${conclusionData[top].suitable.map(it => `<li style="color: #2e7d32;">${it}</li>`).join('')}
+                </ul>
+              </div>
+              <div class="rec-item rec-unsuitable">
+                <div class="rec-title" style="color: #c62828;"><span>❌ Không phù hợp với</span></div>
+                <ul class="insight-list">
+                  ${conclusionData[top].unsuitable.map(it => `<li style="color: #c62828;">${it}</li>`).join('')}
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="result-actions" style="display: flex; gap: 15px; justify-content: center; margin-top: 40px;">
+            <button class="btn btn-ghost" onclick="window.location.href='/'">Trang chủ</button>
+            <button class="btn btn-primary" style="background: #111; color: white;" onclick="window.location.href='../Step_3_Matrix/index.html'">Khám phá ma trận nghề nghiệp</button>
+            <button class="btn btn-ghost" onclick="location.reload()">Làm lại</button>
+          </div>
+        `;
+
+        document.getElementById('hdrBlock').style.display = 'none';
+        document.getElementById('questionArea').style.display = 'none';
+        document.getElementById('quizFooter').style.display = 'none';
+        document.getElementById('progressShell').style.display = 'none';
+        document.getElementById('resultScreen').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } catch (err) { console.error(err); showToast("Có lỗi xảy ra. Vui lòng thử lại."); }
+    }
+
+    function showToast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3000); }
+    renderPage();
+  </script>
+</body>
+</html>
