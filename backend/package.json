@@ -1,7 +1,7 @@
 {
-  "name": "keyreer-backend",
+  "name": "kareer-backend",
   "version": "1.0.0",
-  "description": "Keyreer Career Orientation Platform — Backend API",
+  "description": "Kareer Career Orientation Platform — Backend API",
   "main": "server.js",
   "scripts": {
     "dev": "node server.js",
