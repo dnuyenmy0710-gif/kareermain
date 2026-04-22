@@ -281,6 +281,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             });
 
+            const inputs = questionContainer.querySelectorAll('input, textarea');
+            inputs.forEach(input => {
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        if (nextBtn) nextBtn.click();
+                    }
+                });
+            });
+
             const textInput = questionContainer.querySelector('textarea');
             if (textInput) {
                 textInput.addEventListener('input', (e) => { userAnswers[q.id] = e.target.value; });
