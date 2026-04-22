@@ -7,7 +7,7 @@
     <title>Kế hoạch học tập | Matrix</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
         body {
@@ -98,194 +98,144 @@
 
         .select-group select {
             padding: 0.8rem 1rem;
-            border-radius: 8px;
-            border: 1px solid #d1d1d1;
-            font-family: inherit;
+            border-radius: 12px;
+            border: 1px solid #ddd;
             font-size: 1rem;
+            color: #111;
             outline: none;
+            transition: all 0.3s ease;
+            background: #fff;
             cursor: pointer;
-            background: #fafafa;
-            transition: border-color 0.3s;
         }
 
         .select-group select:focus {
-            border-color: #000;
-            background: #fff;
+            border-color: #111;
+            box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
         }
 
-        .filter-box .btn {
-            height: 47px;
-            border-radius: 8px;
-            padding: 0 2rem;
-            white-space: nowrap;
+        .btn-black {
+            background: #111;
+            color: #fff;
+            padding: 0.8rem 2rem;
+            border-radius: 12px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            height: 48px;
         }
 
-        /* Roadmap Result */
+        .btn-black:hover {
+            background: #333;
+            transform: translateY(-2px);
+        }
+
+        /* Results Container */
         .roadmap-result {
             width: 100%;
             max-width: 800px;
-            display: flex;
-            flex-direction: column;
-            gap: 2.5rem;
         }
 
         .roadmap-step {
             background: #fff;
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.04);
-            border: 1px solid #eee;
-            position: relative;
-            animation: slideUp 0.5s ease forwards;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.04);
+            border: 1px solid #f0f0f0;
+            animation: slideUp 0.8s ease forwards;
             opacity: 0;
-            transform: translateY(20px);
         }
 
         @keyframes slideUp {
-            to { opacity: 1; transform: translateY(0); }
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
         .step-badge {
             display: inline-block;
-            padding: 0.4rem 1.2rem;
-            background: #242224;
+            padding: 0.5rem 1.2rem;
+            background: #111;
             color: #fff;
-            font-weight: 800;
-            font-size: 0.75rem;
             border-radius: 50px;
-            margin-bottom: 1rem;
+            font-size: 0.75rem;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
         }
 
         .roadmap-step h2 {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            color: #111;
-        }
-
-        .step-content {
-            display: grid;
-            grid-template-columns: 1fr 1.2fr;
-            gap: 2rem;
-        }
-
-        .skill-list ul, .course-list ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .skill-list h3, .course-list h3 {
-            font-size: 1.05rem;
-            color: #111;
+            font-size: 2rem;
             margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            color: #111;
         }
 
         .skill-list li {
-            position: relative;
-            padding-left: 1.2rem;
             margin-bottom: 0.8rem;
-            color: #555;
-            font-size: 0.95rem;
+            color: #444;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
         }
 
         .skill-list li::before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: #4caf50;
-            font-weight: bold;
+            content: '•';
+            color: #111;
+            font-weight: 900;
         }
 
         .coursera-card {
-            display: flex;
-            flex-direction: column;
-            padding: 1rem;
-            background: #fdfdfd;
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
-            margin-bottom: 1rem;
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 12px;
             text-decoration: none;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
         .coursera-card:hover {
-            border-color: #242224;
-            box-shadow: 0 4px 15px rgba(36, 34, 36, 0.1);
-            transform: translateY(-2px);
-        }
-
-        .coursera-logo {
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: #0056D2; /* Coursera blue */
-            margin-bottom: 0.3rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .coursera-title {
-            font-size: 0.95rem;
-            color: #111;
-            font-weight: 600;
-            line-height: 1.4;
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border-color: #111;
         }
 
         .arrow-down {
             text-align: center;
-            font-size: 1.5rem;
-            color: #ccc;
-            margin: -1rem 0;
+            font-size: 2rem;
+            color: #ddd;
+            margin: 1rem 0;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
         }
 
         @media (max-width: 768px) {
-            .filter-box {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .select-group {
-                min-width: 100%;
-            }
-            .step-content {
-                grid-template-columns: 1fr;
-            }
-            .back-btn {
-                position: static;
-                margin-bottom: 2rem;
-                align-self: flex-start;
-            }
-            .roadmap-view {
-                padding: 2rem 1rem;
-            }
+            .roadmap-view { padding: 2rem 1rem; }
+            .roadmap-header h1 { font-size: 1.8rem; }
+            .filter-box { padding: 1.5rem; gap: 1rem; }
+            .select-group { min-width: 100%; }
+            .roadmap-step { padding: 2rem; }
         }
     </style>
 </head>
 
 <body>
     <div class="roadmap-view">
-        <a href="javascript:history.back()" class="back-btn">
-            <span>&larr;</span> Quay lại
-        </a>
-
-        <div class="explorer-nav" style="margin-top: 1rem; margin-bottom: 2rem;">
-            <div class="nav-tab" onclick="location.href='index.html'">Mở lối sự nghiệp</div>
-            <div class="nav-tab" id="nav-detail">Chi tiết nghề nghiệp</div>
-            <div class="nav-tab active">Lộ trình phát triển</div>
-        </div>
-
-        <div class="roadmap-header">
-            <h1>Thiết kế lộ trình học tập</h1>
-            <p id="career-subtitle">Tùy chỉnh hành trình phát triển để đạt được mục tiêu của bạn.</p>
-        </div>
+        <a href="index.html" class="back-btn">← Quay lại Matrix</a>
+        
+        <header class="roadmap-header">
+            <h1>Kế hoạch học tập</h1>
+            <p id="career-subtitle">Tùy chỉnh hành trình phát triển cho nghề nghiệp của bạn.</p>
+        </header>
 
         <div class="filter-box">
             <div class="select-group">
                 <label>Vị trí hiện tại</label>
                 <select id="start-level">
-                    <option value="0">Thực tập sinh / Fresher</option>
+                    <option value="0">Sinh viên / Mới bắt đầu</option>
                     <option value="1">Chuyên viên (Junior)</option>
                     <option value="2">Chuyên viên Cao cấp (Senior)</option>
                 </select>
@@ -294,8 +244,8 @@
                 <label>Mục tiêu hướng tới</label>
                 <select id="end-level">
                     <option value="1">Chuyên viên (Junior)</option>
-                    <option value="2" selected>Chuyên viên Cao cấp (Senior)</option>
-                    <option value="3">Quản lý / Trưởng nhóm (Manager)</option>
+                    <option value="2">Chuyên viên Cao cấp (Senior)</option>
+                    <option value="3" selected>Quản lý (Manager)</option>
                 </select>
             </div>
             <button class="btn btn-black" onclick="generateRoadmap()">Tạo lộ trình</button>
@@ -312,8 +262,7 @@
             const careerName = urlParams.get('career') || localStorage.getItem('selectedCareer') || 'Nghề nghiệp';
             document.getElementById('career-subtitle').innerHTML = `Tùy chỉnh hành trình phát triển cho <strong>${careerName}</strong>.`;
             document.title = `Kế hoạch học tập - ${careerName} | Matrix`;
-            document.getElementById('nav-detail').onclick = () => location.href = `timeline.html?career=${encodeURIComponent(careerName)}`;
-
+            
             // Auto-generate on load
             generateRoadmap();
         });
@@ -420,14 +369,13 @@
                                 </ul>
                             </div>
                             <div class="course-list">
-                                <h3 style="border-bottom: 1px solid #eee; padding-bottom: 0.5rem;">Lộ trình đào tạo đề xuất (Cơ bản &rarr; Nâng cao)</h3>
+                                <h3 style="border-bottom: 1px solid #eee; padding-bottom: 0.5rem;">Lộ trình đào tạo đề xuất</h3>
                                 <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 1.2rem; position: relative;">
                                     ${data.courses.map((course, idx) => {
                                         const levels = ["Cơ bản", "Nền tảng", "Trung cấp", "Nâng cao"];
                                         const level = levels[idx] || "Chuyên sâu";
                                         const palette = ["#DCD1C7", "#616F84", "#917E71", "#685C54"];
                                         const levelColor = palette[idx] || "#685C54";
-                                        const textColor = idx === 0 ? "#8C7864" : "white"; // Darker text for light background
                                         
                                         return `
                                             <a href="${course.link}" target="_blank" class="coursera-card" style="padding: 1.2rem; margin-bottom: 0; display: flex; flex-direction: row; align-items: center; gap: 15px; border-left: 5px solid ${levelColor};">
@@ -438,7 +386,6 @@
                                                     <span class="coursera-logo" style="color: ${levelColor}; font-size: 0.7rem; font-weight: 800; margin-bottom: 2px; display: block; opacity: 0.8;">${course.provider}</span>
                                                     <span class="coursera-title" style="font-size: 1rem; margin: 0; color: #111;">${course.name}</span>
                                                 </div>
-                                                <div style="color: ${levelColor}; font-size: 1.2rem; opacity: 0.5;">&rarr;</div>
                                             </a>
                                         `;
                                     }).join('')}
