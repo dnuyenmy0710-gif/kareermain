@@ -1,3 +1,148 @@
 <!DOCTYPE html>
 <html lang="vi">
-<!-- ... I will get the actual content ... -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hành Trình Tìm Kiếm Career Path | Mark Twain Quote</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <meta name="description" content="Khám phá hành trình tìm kiếm sự nghiệp và mục đích sống của bạn thông qua câu nói truyền cảm hứng của Mark Twain.">
+    <meta name="keywords" content="career path, định hướng nghề nghiệp, Mark Twain, truyền cảm hứng">
+    <meta name="author" content="Antigravity AI">
+    <meta property="og:title" content="Hành Trình Tìm Kiếm Career Path">
+    <meta property="og:description" content="Hai ngày quan trọng nhất đời người là ngày bạn sinh ra và ngày bạn tìm ra lý do tại sao mình tồn tại.">
+</head>
+<body>
+    <div class="overlay-grain"></div>
+    
+    <header class="main-header">
+        <div class="logo-area">
+            <img src="Thiết kế chưa có tên.png" alt="Keyreer Logo" class="main-logo">
+        </div>
+    </header>
+
+    <main>
+        <!-- HERO SECTION -->
+        <section class="quote-section">
+            <div class="quote-wrapper">
+                <span class="quote-icon-top">“</span>
+                <h1 class="quote-text" id="typewriter-quote" data-text="Hai ngày quan trọng nhất đời người là ngày bạn sinh ra và ngày bạn tìm ra lý do tại sao mình tồn tại.">
+                </h1>
+                <span class="quote-icon-bottom">”</span>
+                <p class="author">_Mark Twain_</p>
+                <div class="button-wrapper">
+                    <button id="cta-button" class="btn-premium">
+                        <span class="btn-text">Khám phá sứ mệnh của bạn</span>
+                        <span class="btn-icon">→</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- FEATURES SECTION -->
+        <section class="features-section" id="features">
+            <div class="features-container">
+                <h2 class="features-title">Keyreer có gì?</h2>
+                <div class="features-list">
+                    <div class="feature-item">
+                        <span class="feature-tick">✓</span>
+                        <div class="feature-content">
+                            <strong>Thị Trường Việt Nam:</strong> Được thiết kế và tối ưu hóa chuyên biệt cho văn hóa và giá trị bản địa.
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-tick">✓</span>
+                        <div class="feature-content">
+                            <strong>Đa Mô Hình Khoa Học:</strong> Kết hợp RIASEC, Big Five và Schwartz trong một hệ thống đánh giá.
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-tick">✓</span>
+                        <div class="feature-content">
+                            <strong>Lộ Trình Đột Phá:</strong> Chiến lược nâng cấp năng lực chi tiết dựa trên dữ liệu thực tế và thực tiễn.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STEPS SECTION -->
+        <section class="steps-section" id="steps">
+            <div class="steps-container">
+                <h2 class="steps-title">Hành trình \"Unlock your career\" trong 3 bước</h2>
+                <div class="steps-grid">
+                    <div class="step-card">
+                        <div class="step-number">01</div>
+                        <h3 class="step-heading">Suy ngẫm về bản thân</h3>
+                        <p class="step-desc">Thấu hiểu điểm mạnh, giá trị cốt lõi và đam mê tiềm ẩn thông qua các mô hình khoa học.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">02</div>
+                        <h3 class="step-heading">Khám phá nghề nghiệp tương lai</h3>
+                        <p class="step-desc">Kết nối bản sắc cá nhân với các cơ hội nghề nghiệp thực tế trong thị trường hiện đại.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">03</div>
+                        <h3 class="step-heading">Lộ trình phát triển</h3>
+                        <p class="step-desc">Xây dựng kế hoạch hành động chi tiết để hiện thực hóa mục tiêu nghề nghiệp của bạn.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER CTA -->
+        <div class="footer-cta">
+            <a href="#" class="btn-link" id="start-assessment">
+                <span>Bắt đầu khám phá</span>
+                <span class="arrow">→</span>
+            </a>
+        </div>
+    </main>
+
+    <!-- ASSESSMENT UI -->
+    <div id="assessment-overlay" class="overlay-container">
+        <button id="close-assessment" class="btn-close">×</button>
+        <div class="assessment-card">
+            <div class="progress-bar">
+                <div id="progress-fill"></div>
+            </div>
+            <div id="question-container">
+                <!-- Questions injected by JS -->
+            </div>
+            <div class="assessment-nav">
+                <button id="prev-btn" class="btn-secondary" disabled>Quay lại</button>
+                <button id="next-btn" class="btn-primary">Tiếp theo</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- RESULTS UI -->
+    <div id="results-overlay" class="overlay-container">
+        <div class="results-card">
+            <h2 class="results-title">Bản Đồ Bản Sắc Cá Nhân</h2>
+            <div class="results-grid">
+                <div class="result-section" id="riasec-result">
+                    <h3>RIASEC (Hứng thú)</h3>
+                    <div class="chart-container" id="riasec-chart"></div>
+                </div>
+                <div class="result-section" id="bigfive-result">
+                    <h3>Big Five (Tính cách)</h3>
+                    <div class="chart-container" id="bigfive-chart"></div>
+                </div>
+                <div class="result-section" id="schwartz-result">
+                    <h3>Schwartz (Giá trị)</h3>
+                    <div class="chart-container" id="schwartz-chart"></div>
+                </div>
+            </div>
+            <button id="restart-assessment" class="btn-premium">Thực hiện lại</button>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="api-client.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
