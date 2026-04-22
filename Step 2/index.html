@@ -200,7 +200,7 @@
     /* Results UI */
     .result-screen { display: none; }
     .result-hdr { text-align: center; margin-bottom: 40px; }
-    .result-title { font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 900; text-transform: uppercase; }
+    .result-title { font-family: var(--font-heading); font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 900; text-transform: uppercase; }
 
     .insight-grid {
       display: grid;
@@ -232,14 +232,14 @@
       box-shadow: 10px 10px 0px 0px rgba(0,0,0,1);
     }
 
-    .theory-title { font-size: 1.4rem; font-weight: 900; margin-bottom: 30px; text-transform: uppercase; border-bottom: 3px solid var(--text-black); padding-bottom: 15px; }
+    .theory-title { font-family: var(--font-heading); font-size: 1.4rem; font-weight: 900; margin-bottom: 30px; text-transform: uppercase; border-bottom: 3px solid var(--text-black); padding-bottom: 15px; }
 
     .theory-section { border: 2px solid var(--text-black); border-radius: 12px; background: #fafafa; padding: 25px 20px; margin-bottom: 30px; }
-    .theory-section-hdr { font-weight: 900; font-size: 1.2rem; margin-bottom: 20px; border-bottom: 1.5px dashed #ccc; padding-bottom: 10px; }
+    .theory-section-hdr { font-family: var(--font-heading); font-weight: 900; font-size: 1.2rem; margin-bottom: 20px; border-bottom: 1.5px dashed #ccc; padding-bottom: 10px; }
 
     .dim-item { padding: 20px; background: white; border: 2px solid #eee; border-radius: 10px; margin-bottom: 15px; }
     .dim-item-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-    .dim-label { font-weight: 800; font-size: 1rem; }
+    .dim-label { font-family: var(--font-heading); font-weight: 800; font-size: 1rem; }
     .dim-badge { font-weight: 800; padding: 5px 15px; border-radius: 8px; font-size: 0.75rem; text-transform: uppercase; }
 
     .dim-bar-track { height: 10px; background: #f0f0f0; border-radius: 5px; overflow: hidden; margin-bottom: 12px; border: 1px solid #ddd; }
@@ -280,6 +280,7 @@
 
     /* Buttons */
     .btn {
+      font-family: var(--font-heading);
       padding: 1rem 2.5rem; border-radius: 999px; font-weight: 800; font-size: 0.95rem; cursor: pointer; border: 3px solid var(--text-black); text-transform: uppercase; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 10px; box-shadow: 4px 4px 0px 0px #000;
     }
     .btn-primary { background: var(--accent); color: white; }

@@ -7,7 +7,7 @@
     <title>Lộ trình thăng tiến | Matrix</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
         body {
@@ -31,12 +31,14 @@
         }
 
         .timeline-header h1 {
+            font-family: var(--font-heading);
             font-size: 2.5rem;
             margin-bottom: 0.5rem;
             color: #111;
         }
 
         .timeline-header p {
+            font-family: var(--font-main);
             color: #666;
             font-size: 1.1rem;
             max-width: 600px;
@@ -50,6 +52,7 @@
             background: #fff;
             color: #111;
             border-radius: 50px;
+            font-family: var(--font-heading);
             font-weight: 600;
             font-size: 0.9rem;
             text-decoration: none;
@@ -99,242 +102,143 @@
         }
 
         .timeline-step {
-            position: relative;
-            z-index: 2;
             display: flex;
             flex-direction: column;
             align-items: center;
+            flex: 1;
+            position: relative;
+            z-index: 2;
             cursor: pointer;
-            transition: all 0.3s ease;
-            flex: 1; /* Equal spacing */
-            padding: 0 10px;
-        }
-
-        .timeline-step:hover {
-            transform: translateY(-2px);
         }
 
         .step-marker {
             width: 28px;
             height: 28px;
-            border-radius: 50%;
             background: #fff;
-            border: 2px solid #e5e7eb;
+            border: 4px solid #e5e7eb;
+            border-radius: 50%;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            margin-bottom: 1.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            flex-shrink: 0;
-        }
-
-        .timeline-step.completed .step-marker {
-            border-color: #000;
-            background: #000;
+            margin-bottom: 1.5rem;
         }
 
         .timeline-step.active .step-marker {
             border-color: #000;
-            background: #fff;
-            box-shadow: 0 0 0 6px rgba(0, 0, 0, 0.05);
-            transform: scale(1.1);
+            background: #000;
+            transform: scale(1.2);
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
         }
 
-        .step-title {
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: #9ca3af;
-            text-align: center;
-            transition: color 0.3s;
-            line-height: 1.4;
-            max-width: 160px;
+        .step-label {
+            font-size: 0.85rem;
+            font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 0.02em;
+            color: #999;
+            transition: color 0.4s ease;
+            text-align: center;
+            max-width: 140px;
+            line-height: 1.4;
+            letter-spacing: 0.05em;
         }
 
-        .timeline-step.active .step-title {
-            color: #000;
+        .timeline-step.active .step-label {
+            color: #111;
         }
 
-        .timeline-step.completed .step-title {
-            color: #4b5563;
-        }
-
-        /* Details Pane */
-        .stage-details {
+        /* Detail Card */
+        .detail-card {
             width: 100%;
-            max-width: 900px;
+            max-width: 800px;
             background: #fff;
-            border-radius: 16px;
-            padding: 2.5rem;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.04);
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05);
             border: 1px solid #f0f0f0;
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            animation: fadeUp 0.5s ease forwards;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+            position: relative;
         }
 
-        @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .detail-card.show {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .details-header {
+        .detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 2rem;
             padding-bottom: 1.5rem;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid #f5f5f5;
         }
 
-        .details-title {
+        .detail-title h2 {
             font-size: 1.8rem;
+            font-weight: 800;
             color: #111;
-            margin-bottom: 0.3rem;
         }
 
-        .details-subtitle {
-            color: #8c9aaf;
-            font-size: 1rem;
-            font-weight: 500;
-        }
-
-        .details-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2.5rem;
-        }
-
-        .detail-section {
-            margin-bottom: 1.5rem;
-        }
-
-        .section-title {
-            font-size: 1.1rem;
-            color: #111;
-            margin-bottom: 1rem;
+        .detail-time {
+            font-size: 0.9rem;
             font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .detail-text {
-            color: #555;
-            line-height: 1.6;
-            font-size: 0.95rem;
-        }
-
-        .detail-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .detail-list li {
-            position: relative;
-            padding-left: 1.2rem;
-            margin-bottom: 0.8rem;
-            color: #555;
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-
-        .detail-list li::before {
-            content: "•";
-            position: absolute;
-            left: 0;
-            color: #000;
-            font-weight: bold;
-            font-size: 1.2rem;
-            line-height: 1.2;
-        }
-
-        .course-item {
-            display: flex;
-            align-items: center;
-            padding: 1rem;
+            color: #666;
             background: #f8f9fa;
-            border-radius: 8px;
-            margin-bottom: 0.8rem;
-            color: #111;
-            text-decoration: none;
-            transition: all 0.3s;
-            border: 1px solid #eee;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+        }
+
+        .detail-body h3 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            color: #333;
+        }
+
+        .detail-body p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .task-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
             font-size: 0.95rem;
-            font-weight: 500;
+            color: #444;
+            padding: 1rem;
+            background: #fafafa;
+            border-radius: 12px;
+            border: 1px solid #f0f0f0;
         }
 
-        .course-item:hover {
-            background: #fff;
-            border-color: #d1d1d1;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        .task-icon {
+            color: #000;
+            font-weight: 900;
         }
 
-        .course-item span {
-            margin-right: 10px;
-            font-size: 1.2rem;
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         @media (max-width: 768px) {
-            .details-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            .progress-timeline {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 2.5rem;
-                padding-left: 15px;
-                margin-left: 10px;
-            }
-
-            .progress-line {
-                width: 4px;
-                height: 100%;
-                left: 28px;
-                top: 0;
-            }
-
-            .progress-line-fill {
-                width: 4px;
-                height: 0%;
-                left: 28px;
-                top: 0;
-                transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            }
-
-            .timeline-step {
-                flex-direction: row;
-                gap: 1.5rem;
-                width: auto;
-            }
-
-            .step-marker {
-                margin-bottom: 0;
-                flex-shrink: 0;
-            }
-
-            .step-title {
-                text-align: left;
-                font-size: 0.9rem;
-                max-width: none;
-            }
-
-            .back-btn {
-                position: static;
-                margin-bottom: 2rem;
-                align-self: flex-start;
-            }
-            
-            .timeline-view {
-                padding: 2rem 1.5rem;
-            }
+            .timeline-view { padding: 4rem 1rem; }
+            .progress-timeline { flex-direction: column; align-items: flex-start; gap: 2rem; padding-left: 2rem; }
+            .progress-line, .progress-line-fill { left: 32px; width: 4px !important; top: 0; bottom: 0; height: auto; }
+            .timeline-step { flex-direction: row; gap: 1.5rem; align-items: center; }
+            .step-marker { margin-bottom: 0; }
+            .step-label { text-align: left; max-width: none; }
+            .detail-card { padding: 2rem 1.5rem; }
         }
     </style>
 </head>
@@ -342,380 +246,112 @@
 <body>
     <div class="timeline-view">
         <a href="index.html" class="back-btn">
-            <span>&larr;</span> Quay lại
+            <span>← Quay lại</span>
         </a>
 
-        <div class="explorer-nav" style="margin-top: 1rem; margin-bottom: 2rem;">
-            <div class="nav-tab" onclick="location.href='index.html'">Mở lối sự nghiệp</div>
-            <div class="nav-tab active">Chi tiết nghề nghiệp</div>
-            <div class="nav-tab" id="nav-roadmap">Lộ trình phát triển</div>
-        </div>
-
         <div class="timeline-header">
-            <h1 id="career-title">Lộ trình thăng tiến</h1>
-            <p>Khám phá các cấp bậc, yêu cầu và kỹ năng cần thiết để chinh phục mục tiêu nghề nghiệp của bạn.</p>
+            <h1>Lộ trình thăng tiến sự nghiệp</h1>
+            <p>Khám phá các cột mốc quan trọng và những kỹ năng cần thiết để đạt được đỉnh cao trong nghề nghiệp.</p>
         </div>
 
-        <!-- Interactive Timeline -->
-        <div class="progress-timeline" id="progress-timeline">
+        <div class="progress-timeline" id="timeline">
             <div class="progress-line"></div>
             <div class="progress-line-fill" id="progress-fill"></div>
-            <!-- Steps injected by JS -->
+            
+            <div class="timeline-step active" onclick="showStep(0)">
+                <div class="step-marker"></div>
+                <div class="step-label">Học viên / Thực tập</div>
+            </div>
+            <div class="timeline-step" onclick="showStep(1)">
+                <div class="step-marker"></div>
+                <div class="step-label">Chuyên viên sơ cấp</div>
+            </div>
+            <div class="timeline-step" onclick="showStep(2)">
+                <div class="step-marker"></div>
+                <div class="step-label">Chuyên viên chính</div>
+            </div>
+            <div class="timeline-step" onclick="showStep(3)">
+                <div class="step-marker"></div>
+                <div class="step-label">Quản lý / Chuyên gia</div>
+            </div>
         </div>
 
-        <!-- Dynamic Details Pane -->
-        <div class="stage-details" id="stage-details">
-            <!-- Content injected by JS -->
+        <div class="detail-card" id="detail-card">
+            <div id="detail-content">
+                <!-- Content will be injected by JS -->
+            </div>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const careerName = urlParams.get('career') || localStorage.getItem('selectedCareer') || 'Nghề nghiệp chưa xác định';
+        const timelineData = [
+            {
+                title: "Thực tập sinh (Intern)",
+                time: "0 - 6 tháng",
+                desc: "Giai đoạn này bạn tập trung vào việc học hỏi quy trình, làm quen với công cụ và hỗ trợ các dự án nhỏ dưới sự hướng dẫn của mentor.",
+                tasks: ["Nắm vững Figma", "Học quy trình Design Thinking", "Làm quen với Agile/Scrum", "Hỗ trợ UI Audit"]
+            },
+            {
+                title: "Junior Designer",
+                time: "6 tháng - 2 năm",
+                desc: "Bạn bắt đầu đảm nhận các tính năng độc lập, thực hiện nghiên cứu người dùng cơ bản và cộng tác trực tiếp với đội ngũ kỹ thuật.",
+                tasks: ["Thiết kế User Flow", "Tạo Wireframe độ phân giải cao", "Thực hiện Usability Testing", "Xây dựng Component Library"]
+            },
+            {
+                title: "Middle Designer",
+                time: "2 - 5 năm",
+                desc: "Giai đoạn này bạn cần có tư duy sản phẩm sâu sắc hơn, có khả năng giải quyết các bài toán UX phức tạp và định hướng cho Junior.",
+                tasks: ["Xây dựng Design System", "Phân tích dữ liệu người dùng", "Tối ưu hóa trải nghiệm chuyển đổi", "Phản biện và bảo vệ thiết kế"]
+            },
+            {
+                title: "Senior / Lead Designer",
+                time: "5 năm +",
+                desc: "Bạn đóng vai trò chiến lược, định hướng tầm nhìn sản phẩm và dẫn dắt đội ngũ thiết kế đạt được các mục tiêu kinh doanh.",
+                tasks: ["Định hướng trải nghiệm thương hiệu", "Quản lý nguồn lực thiết kế", "Xây dựng chiến lược sản phẩm", "Đào tạo và phát triển đội ngũ"]
+            }
+        ];
 
-            document.getElementById('career-title').textContent = careerName;
-            document.title = `Chi tiết - ${careerName} | Matrix`;
-            const roadmapUrl = `roadmap.html?career=${encodeURIComponent(careerName)}`;
-            document.getElementById('nav-roadmap').onclick = () => location.href = roadmapUrl;
+        function showStep(index) {
+            const steps = document.querySelectorAll('.timeline-step');
+            const fill = document.getElementById('progress-fill');
+            const card = document.getElementById('detail-card');
+            const content = document.getElementById('detail-content');
 
-            // Data roadmap chi tiết
-            // Hệ thống dữ liệu lộ trình thăng tiến chi tiết theo từng ngành nghề
-            const masterCareerData = {
-                "Lập trình viên": [
-                    {
-                        title: "Fresher / Thực tập sinh IT",
-                        shortDesc: "0 - 1 Năm kinh nghiệm",
-                        jd: "Hỗ trợ phát triển các module nhỏ dưới sự hướng dẫn của Senior. Tìm hiểu quy trình coding convention và luồng vận hành của sản phẩm.",
-                        requirements: ["Kiến thức nền tảng về cấu trúc dữ liệu và giải thuật", "Biết sử dụng Git cơ bản", "Tư duy logic tốt"],
-                        skills: ["Ngôn ngữ lập trình cốt lõi (JS/Java/Python...)", "Sử dụng IDE", "Làm việc nhóm"],
-                        dailyTasks: [
-                            "Viết mã nguồn cho các tính năng đơn giản theo yêu cầu",
-                            "Thực hiện Unit Test cho các module vừa viết",
-                            "Fix các bug nhỏ do bộ phận QA/QC phát hiện",
-                            "Tham gia các buổi Daily Scrum cùng team",
-                            "Nghiên cứu tài liệu kỹ thuật (Documentation) của dự án",
-                            "Hỗ trợ viết technical log cho các thay đổi nhỏ",
-                            "Học hỏi các công nghệ mới thông qua các dự án nội bộ"
-                        ]
-                    },
-                    {
-                        title: "Junior Developer",
-                        shortDesc: "1 - 3 Năm kinh nghiệm",
-                        jd: "Tự chủ trong việc phát triển các tính năng hoàn chỉnh. Tham gia đóng góp ý tưởng vào kiến trúc phần mềm và tối ưu hóa hiệu năng ứng dụng.",
-                        requirements: ["Kinh nghiệm làm việc thực tế với ít nhất 1 Framework", "Hiểu về SQL/NoSQL và cách tối ưu truy vấn", "Khả năng đọc hiểu tài liệu tiếng Anh tốt"],
-                        skills: ["Thiết kế Database", "API Integration", "Problem Solving"],
-                        dailyTasks: [
-                            "Phát triển các API và tính năng trọng yếu của sản phẩm",
-                            "Tối ưu hóa mã nguồn để cải thiện tốc độ tải trang/ứng dụng",
-                            "Tự quản lý công việc trên Jira/Trello đúng tiến độ",
-                            "Phối hợp với Designer để triển khai giao diện người dùng",
-                            "Viết tài liệu hướng dẫn kỹ thuật cho các module phụ trách",
-                            "Tham gia thiết kế giải pháp cho các yêu cầu mới từ khách hàng",
-                            "Thực hiện bảo trì và cập nhật các phiên bản phần mềm hiện có",
-                            "Tư vấn kỹ thuật cho bộ phận kinh doanh hoặc khách hàng khi cần"
-                        ]
-                    },
-                    {
-                        title: "Senior Developer",
-                        shortDesc: "3 - 5 Năm kinh nghiệm",
-                        jd: "Chịu trách nhiệm thiết kế kiến trúc hệ thống tổng thể. Giải quyết các bài toán kỹ thuật phức tạp về bảo mật, mở rộng và hiệu năng cao.",
-                        requirements: ["Tầm nhìn hệ thống (System Architecture)", "Khả năng mentor và dẫn dắt kỹ thuật cho team", "Am hiểu sâu về DevOps và Cloud Services"],
-                        skills: ["System Design", "Security Audit", "Code Review & Quality Control"],
-                        dailyTasks: [
-                            "Thiết kế kiến trúc hệ thống và lựa chọn stack công nghệ phù hợp",
-                            "Thực hiện Code Review định kỳ để đảm bảo chất lượng mã nguồn",
-                            "Đào tạo và hướng dẫn (Mentoring) cho Junior và Fresher",
-                            "Nghiên cứu và áp dụng các công nghệ mới nhất vào dự án",
-                            "Xử lý các sự cố hệ thống nghiêm trọng (Hotfix)",
-                            "Làm việc với Project Manager để dự báo nguồn lực kỹ thuật",
-                            "Xây dựng quy trình CI/CD cho dự án",
-                            "Đảm bảo tính bảo mật và khả năng mở rộng của hệ thống"
-                        ]
-                    },
-                    {
-                        title: "Technical Architect / Manager",
-                        shortDesc: "Trên 5 Năm kinh nghiệm",
-                        jd: "Định hướng chiến lược công nghệ cho toàn bộ tổ chức hoặc dự án lớn. Quản lý nguồn lực, ngân sách và đảm bảo sự phát triển bền vững của đội ngũ kỹ thuật.",
-                        requirements: ["Kỹ năng quản trị và lãnh đạo xuất sắc", "Khả năng ra quyết định chiến lược", "Hiểu biết sâu rộng về thị trường công nghệ"],
-                        skills: ["Strategic Planning", "Resource Management", "High-level Stakeholder Communication"],
-                        dailyTasks: [
-                            "Lập kế hoạch lộ trình phát triển công nghệ (Technology Roadmap)",
-                            "Quản lý ngân sách cho các hạ tầng và dịch vụ công nghệ",
-                            "Phỏng vấn và xây dựng chiến lược tuyển dụng nhân sự giỏi",
-                            "Làm việc trực tiếp với khách hàng và đối tác về chiến lược sản phẩm",
-                            "Giải quyết các mâu thuẫn và vấn đề nhân sự trong team kỹ thuật",
-                            "Đánh giá hiệu quả công việc và lộ trình thăng tiến cho nhân sự",
-                            "Đại diện bộ phận kỹ thuật báo cáo trước Ban giám đốc",
-                            "Xây dựng văn hóa kỹ thuật và tiêu chuẩn chất lượng cho công ty"
-                        ]
-                    }
-                ],
-                "Kế toán": [
-                    {
-                        title: "Kế toán viên sơ cấp",
-                        shortDesc: "0 - 1 Năm kinh nghiệm",
-                        jd: "Thực hiện các nghiệp vụ kế toán cơ bản, nhập liệu và lưu trữ chứng từ. Hỗ trợ chuẩn bị hồ sơ cho các đợt quyết toán.",
-                        requirements: ["Nắm vững nguyên lý kế toán", "Thành thạo Excel", "Cẩn thận và trung thực"],
-                        skills: ["Nhập liệu chứng từ", "Sắp xếp hồ sơ", "Phần mềm kế toán cơ bản"],
-                        dailyTasks: [
-                            "Thu thập và kiểm tra tính hợp lệ của hóa đơn, chứng từ",
-                            "Nhập liệu các nghiệp vụ phát sinh vào phần mềm kế toán",
-                            "Lưu trữ và sắp xếp hồ sơ kế toán khoa học",
-                            "Hỗ trợ kiểm kê quỹ tiền mặt và kho định kỳ",
-                            "Thực hiện các giao dịch tại ngân hàng",
-                            "Soạn thảo các công văn, hợp đồng đơn giản",
-                            "Hỗ trợ kê khai các loại thuế cơ bản (VAT, PIT)"
-                        ]
-                    },
-                    {
-                        title: "Kế toán tổng hợp",
-                        shortDesc: "1 - 3 Năm kinh nghiệm",
-                        jd: "Chịu trách nhiệm tổng hợp số liệu, lập báo cáo tài chính và báo cáo thuế. Kiểm soát các nghiệp vụ phát sinh trong toàn doanh nghiệp.",
-                        requirements: ["Am hiểu luật thuế và quy định kế toán hiện hành", "Khả năng phân tích số liệu", "Kỹ năng làm việc độc lập"],
-                        skills: ["Lập báo cáo tài chính", "Quyết toán thuế", "Đối chiếu công nợ"],
-                        dailyTasks: [
-                            "Kiểm tra và đối chiếu số liệu chi tiết và tổng hợp",
-                            "Lập báo cáo tài chính định kỳ (tháng, quý, năm)",
-                            "Thực hiện các tờ khai thuế và quyết toán thuế thu nhập",
-                            "Theo dõi và quản lý công nợ khách hàng và nhà cung cấp",
-                            "Tính lương và các khoản trích theo lương cho nhân viên",
-                            "Phân tích các khoản chi phí và đề xuất phương án tối ưu",
-                            "Làm việc trực tiếp với cơ quan thuế khi có yêu cầu",
-                            "Hướng dẫn nghiệp vụ cho kế toán viên sơ cấp"
-                        ]
-                    },
-                    {
-                        title: "Kế toán trưởng",
-                        shortDesc: "3 - 5 Năm kinh nghiệm",
-                        jd: "Quản lý và điều hành toàn bộ bộ phận kế toán. Tham mưu cho ban giám đốc về chiến lược tài chính và quản trị rủi ro.",
-                        requirements: ["Chứng chỉ Kế toán trưởng", "Kỹ năng quản lý đội nhóm", "Khả năng chịu áp lực cao"],
-                        skills: ["Financial Management", "Risk Assessment", "Leadership"],
-                        dailyTasks: [
-                            "Tổ chức và điều hành bộ máy kế toán của công ty",
-                            "Kiểm soát dòng tiền và lập kế hoạch tài chính ngắn hạn",
-                            "Thẩm định các báo cáo tài chính trước khi trình Ban giám đốc",
-                            "Xây dựng quy chế tài chính và quy trình kiểm soát nội bộ",
-                            "Đàm phán với ngân hàng về các khoản vay và dịch vụ tài chính",
-                            "Chịu trách nhiệm về tính pháp lý của các số liệu kế toán",
-                            "Tư vấn cho lãnh đạo về chính sách thuế và đầu tư",
-                            "Đào tạo và phát triển đội ngũ kế toán kế cận"
-                        ]
-                    },
-                    {
-                        title: "Giám đốc tài chính (CFO)",
-                        shortDesc: "Trên 5 Năm kinh nghiệm",
-                        jd: "Quản trị tài chính chiến lược, tối ưu hóa cấu trúc vốn và huy động nguồn lực tài chính cho sự phát triển của doanh nghiệp.",
-                        requirements: ["Tầm nhìn chiến lược tài chính quốc tế", "Kỹ năng đàm phán cấp cao", "Am hiểu thị trường chứng khoán/đầu tư"],
-                        skills: ["Strategic Finance", "Capital Structure Optimization", "Investor Relations"],
-                        dailyTasks: [
-                            "Hoạch định chiến lược tài chính dài hạn cho doanh nghiệp",
-                            "Phân tích hiệu quả đầu tư và các dự án kinh doanh lớn",
-                            "Huy động vốn thông qua cổ phiếu, trái phiếu hoặc vay vốn quốc tế",
-                            "Xây dựng mối quan hệ với các nhà đầu tư và cổ đông",
-                            "Thực hiện M&A (Sáp nhập & Mua lại) và tái cấu trúc doanh nghiệp",
-                            "Quản trị rủi rố tài chính trên quy mô tập đoàn",
-                            "Đưa ra các quyết định quan trọng về phân phối lợi nhuận",
-                            "Đóng góp vào việc xây dựng tầm nhìn và sứ mệnh của công ty"
-                        ]
-                    }
-                ]
-            };
+            steps.forEach((s, i) => {
+                if (i <= index) s.classList.add('active');
+                else s.classList.remove('active');
+            });
 
-            // Hàm tạo dữ liệu mẫu nếu ngành nghề không nằm trong danh sách cụ thể
-            const generateGenericRoadmap = (name) => [
-                {
-                    title: `Fresher ${name}`,
-                    shortDesc: "0 - 1 Năm kinh nghiệm",
-                    jd: `Bắt đầu sự nghiệp với vai trò hỗ trợ trong các dự án ${name}. Tập trung vào việc học hỏi quy trình và xây dựng nền tảng chuyên môn vững chắc.`,
-                    requirements: ["Tốt nghiệp chuyên ngành liên quan", "Nhiệt huyết và sẵn sàng học hỏi", "Kỹ năng cơ bản phù hợp với ngành"],
-                    skills: ["Kỹ năng chuyên môn cơ bản", "Sử dụng công cụ văn phòng", "Làm việc nhóm"],
-                    dailyTasks: [
-                        `Thực hiện các nhiệm vụ hỗ trợ chuyên môn ${name} hàng ngày`,
-                        "Thu thập và xử lý thông tin, dữ liệu phục vụ dự án",
-                        "Tham gia các khóa đào tạo nội bộ của công ty",
-                        "Chuẩn bị tài liệu và báo cáo công việc định kỳ",
-                        "Hỗ trợ các thành viên Senior trong các nhiệm vụ phức tạp",
-                        "Tìm hiểu văn hóa doanh nghiệp và quy chuẩn nghề nghiệp",
-                        "Xây dựng mạng lưới quan hệ đồng nghiệp cơ bản"
-                    ]
-                },
-                {
-                    title: `Chuyên viên ${name}`,
-                    shortDesc: "1 - 3 Năm kinh nghiệm",
-                    jd: `Đảm nhận các dự án độc lập trong lĩnh vực ${name}. Bắt đầu khẳng định năng lực cá nhân thông qua các kết quả công việc cụ thể và chất lượng.`,
-                    requirements: ["Nắm vững kiến thức chuyên môn nâng cao", "Khả năng giải quyết vấn đề độc lập", "Kỹ năng giao tiếp và thuyết phục tốt"],
-                    skills: ["Kỹ năng phân tích sâu", "Quản lý thời gian", "Sáng tạo trong công việc"],
-                    dailyTasks: [
-                        `Trực tiếp thực thi các chiến dịch/dự án ${name} quan trọng`,
-                        "Đề xuất các ý tưởng cải tiến quy trình làm việc hiện tại",
-                        "Quản lý danh sách khách hàng hoặc đối tác phụ trách",
-                        "Báo cáo hiệu quả công việc trực tiếp cho quản lý",
-                        "Tham gia đào tạo và hướng dẫn cho thực tập sinh mới",
-                        "Nghiên cứu xu hướng thị trường trong lĩnh vực của mình",
-                        "Xử lý các tình huống phát sinh đột xuất trong dự án",
-                        "Duy trì và phát triển tiêu chuẩn chất lượng sản phẩm/dịch vụ"
-                    ]
-                },
-                {
-                    title: `Chuyên viên cao cấp / Trưởng nhóm ${name}`,
-                    shortDesc: "3 - 5 Năm kinh nghiệm",
-                    jd: `Dẫn dắt một nhóm nhỏ thực hiện các mục tiêu chiến lược trong mảng ${name}. Chịu trách nhiệm về chất lượng đầu ra và sự phát triển của nhân sự cấp dưới.`,
-                    requirements: ["Kỹ năng lãnh đạo và quản lý đội ngũ", "Tư duy chiến lược và bao quát", "Khả năng ra quyết định dưới áp lực"],
-                    skills: ["Leadership", "Strategic Planning", "Conflict Resolution"],
-                    dailyTasks: [
-                        `Lập kế hoạch hoạt động chi tiết cho team ${name}`,
-                        "Phân bổ nguồn lực và giám sát tiến độ công việc của team",
-                        "Review và phê duyệt các kết quả công việc quan trọng",
-                        "Đánh giá năng lực và phản hồi (Feedback) cho nhân viên",
-                        "Giải quyết các vấn đề phức tạp vượt quá khả năng của Junior",
-                        "Làm việc với các phòng ban khác để phối hợp dự án",
-                        "Đề xuất ngân sách và tài nguyên cần thiết cho bộ phận",
-                        "Chịu trách nhiệm về chỉ số KPI của cả nhóm"
-                    ]
-                },
-                {
-                    title: `Quản lý cấp cao / Giám đốc ${name}`,
-                    shortDesc: "Trên 5 Năm kinh nghiệm",
-                    jd: `Định hướng tầm nhìn và chiến lược phát triển cho toàn bộ khối ${name}. Đảm bảo sự phát triển của bộ phận đóng góp trực tiếp vào mục tiêu chung của doanh nghiệp.`,
-                    requirements: ["Tầm nhìn kinh doanh và quản trị vĩ mô", "Mạng lưới quan hệ sâu rộng trong ngành", "Khả năng truyền cảm hứng mạnh mẽ"],
-                    skills: ["Visionary Leadership", "Change Management", "Business Development"],
-                    dailyTasks: [
-                        `Xây dựng chiến lược phát triển dài hạn cho mảng ${name}`,
-                        "Đưa ra các quyết định quan trọng về đầu tư và nhân sự cấp cao",
-                        "Đại diện công ty trong các sự kiện và quan hệ đối tác lớn",
-                        "Quản lý hiệu quả hoạt động và ngân sách cấp bộ phận/khối",
-                        "Xây dựng văn hóa và môi trường làm việc chuyên nghiệp",
-                        "Dự báo các biến động thị trường để điều chỉnh chiến lược",
-                        "Báo cáo trực tiếp và tham mưu cho Hội đồng quản trị",
-                        "Đào tạo đội ngũ quản lý kế cận cho doanh nghiệp"
-                    ]
-                }
-            ];
+            // Update progress line
+            const percentage = (index / (steps.length - 1)) * 75;
+            fill.style.width = `${percentage}%`;
 
-            const timelineData = masterCareerData[careerName] || generateGenericRoadmap(careerName);
+            const data = timelineData[index];
+            card.classList.remove('show');
 
-            const timelineContainer = document.getElementById('progress-timeline');
-            const progressFill = document.getElementById('progress-fill');
-            const detailsContainer = document.getElementById('stage-details');
-
-            // Render Timeline Steps
-            const barLabels = [
-                'Thực tập sinh/ Fresher', 
-                'Chuyên viên (Junior)', 
-                'Chuyên viên cao cấp(senior)', 
-                'Quản lý/trưởng nhóm(manager)'
-            ];
-            timelineData.forEach((item, index) => {
-                const step = document.createElement('div');
-                step.className = 'timeline-step';
-                step.dataset.index = index;
-                step.innerHTML = `
-                    <div class="step-marker"></div>
-                    <div class="step-title">${barLabels[index] || item.title}</div>
+            setTimeout(() => {
+                content.innerHTML = `
+                    <div class="detail-header">
+                        <div class="detail-title">
+                            <h2>${data.title}</h2>
+                        </div>
+                        <span class="detail-time">${data.time}</span>
+                    </div>
+                    <div class="detail-body">
+                        <h3>Mục tiêu giai đoạn</h3>
+                        <p>${data.desc}</p>
+                        <h3>Kỹ năng & Nhiệm vụ cốt lõi</h3>
+                        <div class="task-list">
+                            ${data.tasks.map(t => `<div class="task-item"><span class="task-icon">✔</span> ${t}</div>`).join('')}
+                        </div>
+                    </div>
                 `;
-                timelineContainer.appendChild(step);
+                card.classList.add('show');
+            }, 300);
+        }
 
-                step.addEventListener('click', () => {
-                    selectStage(index);
-                });
-            });
-
-            // Handle Selection
-            function selectStage(activeIndex) {
-                const steps = document.querySelectorAll('.timeline-step');
-                
-                steps.forEach((step, index) => {
-                    step.classList.remove('active', 'completed');
-                    if (index < activeIndex) {
-                        step.classList.add('completed');
-                    } else if (index === activeIndex) {
-                        step.classList.add('active');
-                    }
-                });
-
-                // Update Progress Line Fill
-                const isMobile = window.innerWidth <= 768;
-                
-                if (isMobile) {
-                    const percentage = (activeIndex / (timelineData.length - 1)) * 100;
-                    progressFill.style.height = `${percentage}%`;
-                    progressFill.style.width = '4px';
-                } else {
-                    const percentage = (activeIndex / (timelineData.length - 1)) * 75;
-                    progressFill.style.width = `${percentage}%`;
-                    progressFill.style.height = '4px';
-                }
-
-                // Render Details
-                renderDetails(activeIndex);
-            }
-
-            // Render Detail Pane
-            function renderDetails(index) {
-                const data = timelineData[index];
-                // Add fade effect
-                detailsContainer.style.opacity = 0;
-                
-                setTimeout(() => {
-                    detailsContainer.innerHTML = `
-                        <div class="details-header">
-                            <h2 class="details-title">${barLabels[index]}</h2>
-                            <div class="details-subtitle">${data.shortDesc}</div>
-                        </div>
-
-                        <div class="details-grid">
-                            <div class="detail-column">
-                                <div class="detail-section">
-                                    <h3 class="section-title">Mô tả công việc (JD)</h3>
-                                    <p class="detail-text">${data.jd}</p>
-                                </div>
-                                
-                                <div class="detail-section">
-                                    <h3 class="section-title">Yêu cầu nghề nghiệp</h3>
-                                    <ul class="detail-list">
-                                        ${data.requirements.map(req => `<li>${req}</li>`).join('')}
-                                    </ul>
-                                </div>
-
-                                <div class="detail-section">
-                                    <h3 class="section-title">Kỹ năng cần có</h3>
-                                    <ul class="detail-list">
-                                        ${data.skills.map(skill => `<li>${skill}</li>`).join('')}
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div class="detail-column">
-                                <div class="detail-section">
-                                    <h3 class="section-title">Công việc hàng ngày (Daily Tasks)</h3>
-                                    <ul class="detail-list">
-                                        ${data.dailyTasks.map(task => `<li>${task}</li>`).join('')}
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div style="display: flex; justify-content: flex-end; margin-top: 1rem;">
-                             <a href="${roadmapUrl}" class="btn btn-black" style="border-radius: 50px; padding: 0.8rem 2rem; font-size: 0.9rem; text-decoration: none;">
-                                Lộ trình phát triển
-                            </a>
-                        </div>
-                    `;
-                    detailsContainer.style.opacity = 1;
-                }, 150);
-            }
-
-            // Init first stage
-            selectStage(0);
-
-            // Handle Resize for progress line
-            window.addEventListener('resize', () => {
-                const activeStep = document.querySelector('.timeline-step.active');
-                if (activeStep) {
-                    selectStage(parseInt(activeStep.dataset.index));
-                }
-            });
-        });
+        // Initialize first step
+        showStep(0);
     </script>
 </body>
 
