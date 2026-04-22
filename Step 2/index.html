@@ -90,6 +90,10 @@
     .card {
       position: relative;
       width: 100%;
+      background: var(--bg-white);
+      border-radius: var(--radius-md);
+      padding: 50px;
+      box-shadow: var(--shadow-md);
     }
 
     .progress-shell {
@@ -108,508 +112,384 @@
       transition: width 0.4s ease;
     }
 
-    /* ─── QUIZ CARD ─── */
-    .quiz-card {
-      background: var(--bg-white);
-      border-radius: var(--radius-md);
-      padding: 60px;
-      box-shadow: var(--shadow-md);
-      min-height: 400px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      transition: var(--transition);
-    }
-
-    .question-meta {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-muted);
-      margin-bottom: 20px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .question-text {
-      font-family: var(--font-heading);
-      font-size: 32px;
-      font-weight: 700;
-      line-height: 1.3;
-      margin-bottom: 40px;
-      color: var(--text-black);
-    }
-
-    /* ─── RATING BUTTONS (1-5) ─── */
-    .options-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 15px;
-      margin-bottom: 50px;
-    }
-
-    .option-btn {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      cursor: pointer;
-      padding: 20px 10px;
-      border-radius: var(--radius-sm);
-      border: 2px solid var(--border-color);
-      background: transparent;
-      transition: var(--transition);
-      position: relative;
-    }
-
-    .option-btn:hover {
-      border-color: var(--accent);
-      background: rgba(0,0,0,0.02);
-    }
-
-    .option-btn.selected {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: var(--bg-white);
-    }
-
-    .option-btn.selected .val-circle {
-      border-color: var(--bg-white);
-      background: var(--bg-white);
-      color: var(--accent);
-    }
-
-    .val-circle {
-      width: 40px;
-      height: 40px;
-      border: 2px solid var(--border-color);
-      border-radius: var(--radius-full);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 18px;
-      transition: var(--transition);
-    }
-
-    .val-label {
-      font-size: 12px;
-      font-weight: 600;
-      text-align: center;
-      opacity: 0.8;
-    }
-
-    /* ─── NAVIGATION ─── */
-    .quiz-nav {
+    .q-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 24px;
+      background: #f8f9fa;
+      border-radius: 16px;
+      margin-bottom: 12px;
+      border: 1.5px solid transparent;
+      transition: all 0.3s ease;
     }
 
-    .btn {
-      padding: 14px 32px;
-      border-radius: var(--radius-full);
-      font-size: 15px;
-      font-weight: 700;
+    .q-item.answered {
+      background: #fff;
+      border-color: #e8f5e9;
+      opacity: 0.9;
+    }
+
+    .q-item:hover {
+      background: #fff;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+      transform: scale(1.005);
+    }
+
+    .q-text {
+      flex: 1;
+      font-size: 1.05rem;
+      font-weight: 500;
+      padding-right: 20px;
+      color: #334155;
+    }
+
+    .options-row {
+      display: flex;
+      gap: 24px;
+      padding-right: 1.5rem;
+    }
+
+    .opt-label {
       cursor: pointer;
-      transition: var(--transition);
-      border: none;
+      position: relative;
+    }
+
+    .opt-label input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .opt-circle {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border-color);
+      background: var(--bg-white);
+      transition: all 0.2s ease;
       display: flex;
       align-items: center;
-      gap: 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      justify-content: center;
     }
 
-    .btn-outline {
-      background: transparent;
-      border: 2px solid var(--border-color);
-      color: var(--text-muted);
-    }
+    .opt-label:hover .opt-circle { border-color: var(--accent); transform: scale(1.1); }
+    .opt-label input:checked + .opt-circle { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,0,0,0.1); }
 
-    .btn-outline:hover:not(:disabled) {
-      border-color: var(--accent);
-      color: var(--accent);
+    .scale-header {
+      display: flex;
+      justify-content: flex-end;
+      gap: 24px;
+      margin-bottom: 20px;
+      padding-right: 1.5rem;
     }
-
-    .btn-outline:disabled {
-      opacity: 0.3;
-      cursor: not-allowed;
-    }
-
-    .btn-solid {
-      background: var(--accent);
-      color: var(--bg-white);
-    }
-
-    .btn-solid:hover:not(:disabled) {
-      background: var(--accent-hover);
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    }
-
-    /* ─── RESULTS PAGE ─── */
-    .results-view {
-      display: none;
-      animation: fadeIn 0.8s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .results-header {
+    .scale-label {
+      width: 20px;
       text-align: center;
-      margin-bottom: 60px;
-    }
-
-    .results-title {
-      font-family: var(--font-heading);
-      font-size: 48px;
+      font-size: 0.52rem;
       font-weight: 800;
-      margin-bottom: 15px;
-    }
-
-    .results-subtitle {
-      color: var(--text-secondary);
-      font-size: 18px;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    /* ─── ANALYSIS BLOCKS (GRID) ─── */
-    .analysis-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 30px;
-      margin-bottom: 60px;
-    }
-
-    .analysis-card {
-      background: var(--bg-white);
-      padding: 40px;
-      border-radius: var(--radius-md);
-      box-shadow: var(--shadow-sm);
-      border: 1px solid var(--border-color);
-      transition: var(--transition);
-    }
-
-    .analysis-card:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--shadow-md);
-    }
-
-    .card-icon {
-      font-size: 32px;
-      margin-bottom: 20px;
-      display: block;
-    }
-
-    .card-title {
-      font-family: var(--font-heading);
-      font-size: 22px;
-      font-weight: 700;
-      margin-bottom: 15px;
-    }
-
-    .card-body {
-      color: var(--text-secondary);
-      font-size: 15px;
-      line-height: 1.8;
-    }
-
-    /* ─── FINAL CTA ─── */
-    .final-cta {
-      text-align: center;
-      background: var(--accent);
-      color: var(--bg-white);
-      padding: 60px;
-      border-radius: var(--radius-md);
-      margin-top: 40px;
-    }
-
-    .final-cta h2 {
-      font-family: var(--font-heading);
-      font-size: 32px;
-      margin-bottom: 20px;
-    }
-
-    .final-cta p {
-      opacity: 0.8;
-      margin-bottom: 30px;
-      font-size: 17px;
-    }
-
-    .btn-white {
-      background: var(--bg-white);
-      color: var(--accent);
-      padding: 18px 45px;
-      font-size: 17px;
-      text-decoration: none;
-      display: inline-flex;
-    }
-
-    /* ─── MOBILE FIXES ─── */
-    @media (max-width: 768px) {
-      .quiz-card { padding: 30px; }
-      .question-text { font-size: 24px; }
-      .options-grid { grid-template-columns: 1fr; }
-      .option-btn { flex-direction: row; justify-content: flex-start; padding: 15px 20px; }
-      .analysis-grid { grid-template-columns: 1fr; }
-      .results-title { font-size: 32px; }
+      color: #94a3b8;
+      text-transform: uppercase;
+      line-height: 1.1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      letter-spacing: 0.08em;
     }
   </style>
 </head>
 
 <body>
+  <div class="shell">
+    <header class="main-header">
+      <a href="/">
+        <img src="../logo.png" alt="Kareer Logo" class="main-logo">
+      </a>
+    </header>
 
-  <header class="main-header">
-    <a href="../index.html">
-      <img src="../logo.png" alt="Kareer Logo" class="main-logo">
-    </a>
-  </header>
+    <div class="progress-shell" id="progressShell">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
 
-  <div class="progress-shell">
-    <div id="progress-bar" class="progress-fill"></div>
+    <div class="quiz-container">
+      <div class="card" id="hdrBlock">
+        <h1 style="font-family: var(--font-heading); font-size: 2.2rem; font-weight: 900; margin-bottom: 10px; text-align: center; text-transform: uppercase;">Khám Phá Bản Sắc Nghề Nghiệp</h1>
+        <p style="text-align: center; color: var(--text-muted); font-size: 1rem; margin-bottom: 0;">Dành 10 phút để thấu hiểu năng lực và định vị lộ trình phát triển bản thân.</p>
+      </div>
+
+      <div id="questionArea" style="margin-top: 30px;">
+        <!-- Questions injected by JS -->
+      </div>
+
+      <div class="footer" id="quizFooter">
+        <div></div>
+        <button class="btn btn-primary" onclick="goNext()">Hoàn tất bài test →</button>
+      </div>
+
+      <div id="resultScreen" class="result-screen">
+        <div class="result-hdr">
+          <h1 class="result-title" id="resultTitle">KẾT QUẢ PHÂN TÍCH</h1>
+        </div>
+        <div id="resultBody"></div>
+      </div>
+    </div>
   </div>
 
-  <main class="quiz-container">
-    <!-- Quiz Interface -->
-    <div id="quiz-view" class="card">
-      <div class="quiz-card">
-        <div id="question-meta" class="question-meta">CÂU HỎI 1/35</div>
-        <h1 id="question-text" class="question-text">Đang tải câu hỏi...</h1>
+  <div id="toast" class="toast"></div>
 
-        <div class="options-grid">
-          <div class="option-btn" data-val="1">
-            <div class="val-circle">1</div>
-            <span class="val-label">Rất không đồng ý</span>
-          </div>
-          <div class="option-btn" data-val="2">
-            <div class="val-circle">2</div>
-            <span class="val-label">Không đồng ý</span>
-          </div>
-          <div class="option-btn" data-val="3">
-            <div class="val-circle">3</div>
-            <span class="val-label">Trung lập</span>
-          </div>
-          <div class="option-btn" data-val="4">
-            <div class="val-circle">4</div>
-            <span class="val-label">Đồng ý</span>
-          </div>
-          <div class="option-btn" data-val="5">
-            <div class="val-circle">5</div>
-            <span class="val-label">Rất đồng ý</span>
-          </div>
-        </div>
-
-        <div class="quiz-nav">
-          <button id="prev-btn" class="btn btn-outline" disabled>← Quay lại</button>
-          <button id="next-btn" class="btn btn-solid" disabled>Tiếp theo →</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Results Interface -->
-    <div id="results-view" class="results-view">
-      <div class="results-header">
-        <h1 class="results-title">Bản Phác Thảo Nghề Nghiệp</h1>
-        <p class="results-subtitle">Dựa trên các câu trả lời của bạn, chúng tôi đã tổng hợp các đặc điểm nổi bật để bạn
-          có cái nhìn sâu sắc hơn về bản thân.</p>
-      </div>
-
-      <div class="analysis-grid">
-        <div class="analysis-card">
-          <span class="card-icon">👤</span>
-          <h3 class="card-title">Đặc điểm cá nhân</h3>
-          <p id="personal-traits" class="card-body">Đang phân tích...</p>
-        </div>
-        <div class="analysis-card">
-          <span class="card-icon">⚡</span>
-          <h3 class="card-title">Thế mạnh</h3>
-          <p id="strengths" class="card-body">Đang phân tích...</p>
-        </div>
-        <div class="analysis-card">
-          <span class="card-icon">⚠️</span>
-          <h3 class="card-title">Hạn chế</h3>
-          <p id="limitations" class="card-body">Đang phân tích...</p>
-        </div>
-        <div class="analysis-card">
-          <span class="card-icon">🚀</span>
-          <h3 class="card-title">Tiềm năng đột phá</h3>
-          <p id="breakthrough" class="card-body">Đang phân tích...</p>
-        </div>
-      </div>
-
-      <div class="final-cta">
-        <h2>Sẵn sàng bước vào Matrix?</h2>
-        <p>Khám phá bản đồ nghề nghiệp chi tiết và xây dựng lộ trình thăng tiến cho riêng bạn ngay bây giờ.</p>
-        <a href="../Step_3_Matrix/index.html" class="btn btn-white">Mở lối sự nghiệp →</a>
-      </div>
-    </div>
-  </main>
-
-  <!-- LIBRARIES -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="../api-client.js"></script>
   <script>
     const questions = [
-      // RIASEC - Realistic (R)
-      { id: 1, type: "R", text: "Tôi thích làm việc với các loại máy móc và thiết bị kỹ thuật." },
-      { id: 2, type: "R", text: "Tôi thích tự tay sửa chữa các đồ vật bị hỏng trong nhà." },
-      { id: 3, type: "R", text: "Tôi thích tham gia các hoạt động ngoài trời như làm vườn hay cắm trại." },
-
-      // RIASEC - Investigative (I)
-      { id: 4, type: "I", text: "Tôi thích dành thời gian để tìm hiểu cách vận hành của các sự vật." },
-      { id: 5, type: "I", text: "Tôi thích giải quyết các bài toán đố hoặc các vấn đề hóc búa." },
-      { id: 6, type: "I", text: "Tôi thường đặt câu hỏi 'tại sao' trước mọi hiện tượng xung quanh." },
-
-      // RIASEC - Artistic (A)
-      { id: 7, type: "A", text: "Tôi thích sáng tạo ra những thứ mới mẻ như vẽ tranh hay viết lách." },
-      { id: 8, type: "A", text: "Tôi thích tham dự các triển lãm nghệ thuật hoặc buổi hòa nhạc." },
-      { id: 9, type: "A", text: "Tôi coi trọng sự tự do trong việc thể hiện cái tôi cá nhân." },
-
-      // RIASEC - Social (S)
-      { id: 10, type: "S", text: "Tôi thích giúp đỡ người khác giải quyết các vấn đề cá nhân của họ." },
-      { id: 11, type: "S", text: "Tôi thích tham gia vào các hoạt động thiện nguyện hoặc cộng đồng." },
-      { id: 12, type: "S", text: "Tôi thấy mình là một người biết lắng nghe và thấu hiểu." },
-
-      // RIASEC - Enterprising (E)
-      { id: 13, type: "E", text: "Tôi thích dẫn dắt một nhóm người để hoàn thành một mục tiêu chung." },
-      { id: 14, type: "E", text: "Tôi thích thuyết phục người khác đồng ý với quan điểm của mình." },
-      { id: 15, type: "E", text: "Tôi có tham vọng đạt được các vị trí quản lý hoặc kinh doanh." },
-
-      // RIASEC - Conventional (C)
-      { id: 16, type: "C", text: "Tôi thích làm việc với các số liệu và dữ liệu cụ thể." },
-      { id: 17, type: "C", text: "Tôi thích sự ngăn nắp và tuân thủ các quy trình có sẵn." },
-      { id: 18, type: "C", text: "Tôi thấy mình làm việc hiệu quả nhất khi có hướng dẫn rõ ràng." },
-
-      // Big Five - Openness (O)
-      { id: 19, type: "O", text: "Tôi luôn sẵn sàng thử nghiệm những ý tưởng mới mẻ và táo bạo." },
-      { id: 20, type: "O", text: "Tôi thích suy nghĩ về các vấn đề mang tính trừu tượng hoặc triết học." },
-
-      // Big Five - Conscientiousness (C)
-      { id: 21, type: "C_BF", text: "Tôi luôn chuẩn bị kỹ lưỡng trước khi bắt đầu bất kỳ công việc nào." },
-      { id: 22, type: "C_BF", text: "Tôi hiếm khi để dở dang các công việc mà mình đã nhận." },
-
-      // Big Five - Extraversion (E)
-      { id: 23, type: "E_BF", text: "Tôi cảm thấy tràn đầy năng lượng khi được giao lưu với mọi người." },
-      { id: 24, type: "E_BF", text: "Tôi thường là người bắt đầu các cuộc trò chuyện trong đám đông." },
-
-      // Big Five - Agreeableness (A)
-      { id: 25, type: "A_BF", text: "Tôi thích quan tâm đến cảm xúc của những người xung quanh." },
-      { id: 26, type: "A_BF", text: "Tôi tin rằng hầu hết mọi người đều có bản chất tốt đẹp." },
-
-      // Big Five - Neuroticism (N)
-      { id: 27, type: "N_BF", text: "Tôi thường cảm thấy lo lắng khi phải đối mặt với các tình huống mới." },
-      { id: 28, type: "N_BF", text: "Tâm trạng của tôi dễ bị ảnh hưởng bởi các sự kiện tiêu cực." },
-
-      // Schwartz Values
-      { id: 29, type: "SV_SelfDir", text: "Sự độc lập trong suy nghĩ và hành động là điều tối quan trọng với tôi." },
-      { id: 30, type: "SV_Benev", text: "Tôi luôn sẵn lòng hỗ trợ bạn bè và người thân khi họ cần." },
-      { id: 31, type: "SV_Achiev", text: "Tôi muốn đạt được những thành công vang dội để được mọi người công nhận." },
-      { id: 32, type: "SV_Univ", text: "Tôi quan tâm đến sự công bằng xã hội và bảo vệ môi trường." },
-      { id: 33, type: "SV_Security", text: "Tôi ưu tiên sự an toàn và ổn định của bản thân và gia đình." },
-      { id: 34, type: "SV_Power", text: "Tôi muốn có được quyền kiểm soát và ảnh hưởng đối với người khác." },
-      { id: 35, type: "SV_Tradition", text: "Tôi trân trọng và tuân thủ các phong tục truyền thống của gia đình." }
+      { text: "Tôi thích dành thời gian để thiết kế ứng dụng, đồ họa, video hoặc tạo nội dung sáng tạo.", group: "artistic" },
+      { text: "Tôi cảm thấy hào hứng khi thử nghiệm những ý tưởng mới dù chưa chắc chắn sẽ thành công.", group: "artistic" },
+      { text: "Tôi thích viết lách, vẽ tranh, chụp ảnh hoặc sáng tác theo phong cách riêng của mình.", group: "artistic" },
+      { text: "Tôi thích dẫn dắt nhóm và thuyết phục mọi người thực hiện ý tưởng của mình.", group: "enterprising" },
+      { text: "Tôi cảm thấy động lực khi đạt được thành tích cao và được người khác công nhận.", group: "enterprising" },
+      { text: "Tôi thích tổ chức sự kiện, gây quỹ hoặc bán hàng.", group: "enterprising" },
+      { text: "Tôi thích làm việc với các con số, dữ liệu và đảm bảo mọi thứ được sắp xếp chính xác.", group: "conventional" },
+      { text: "Tôi ưu tiên sự ổn định, an toàn và các quy trình làm việc rõ ràng.", group: "conventional" },
+      { text: "Tôi thích lập kế hoạch chi tiết và tuân thủ lịch trình đã đề ra.", group: "conventional" },
+      { text: "Tôi thích giúp đỡ, lắng nghe và tư vấn cho người khác giải quyết vấn đề của họ.", group: "social" },
+      { text: "Tôi quan tâm đến các vấn đề xã hội và muốn đóng góp giá trị cho cộng đồng.", group: "social" },
+      { text: "Tôi thích làm việc trong môi trường tập thể và kết nối mọi người lại với nhau.", group: "social" },
+      { text: "Tôi thích làm việc với máy móc, công cụ kỹ thuật hoặc các hoạt động ngoài trời.", group: "realistic" },
+      { text: "Tôi thích tự tay lắp ráp, sửa chữa hoặc chế tạo các đồ vật hữu hình.", group: "realistic" },
+      { text: "Tôi thích nghiên cứu khoa học, phân tích các hiện tượng và tìm lời giải cho những câu hỏi hóc búa.", group: "investigative" },
+      { text: "Tôi thích dành hàng giờ để tìm hiểu sâu về một chủ đề chuyên môn mà mình quan tâm.", group: "investigative" },
+      { text: "Tôi thường đặt câu hỏi 'tại sao' và tìm kiếm bằng chứng logic trước khi tin vào điều gì đó.", group: "investigative" },
+      { text: "Sự tự do trong suy nghĩ và hành động là điều tối quan trọng đối với tôi.", group: "artistic" },
+      { text: "Tôi muốn có tầm ảnh hưởng và quyền quyết định trong công việc.", group: "enterprising" },
+      { text: "Tôi thích sự ngăn nắp và tối ưu hóa các quy trình sẵn có.", group: "conventional" },
+      { text: "Tôi coi trọng sự tôn trọng và gìn giữ các giá trị truyền thống.", group: "conventional" },
+      { text: "Tôi thấy hạnh phúc khi những người xung quanh tôi thành công và vui vẻ.", group: "social" },
+      { text: "Tôi thường bắt đầu cuộc trò chuyện trong các sự kiện đông người.", group: "extraversion" },
+      { text: "Tôi có xu hướng lo lắng khi đối mặt với những thay đổi đột ngột.", group: "neuroticism" },
+      { text: "Tôi luôn sẵn lòng chia sẻ kiến thức và hỗ trợ đồng nghiệp.", group: "social" },
+      { text: "Tôi thích những hoạt động mang tính thử thách và trải nghiệm mới lạ.", group: "openness" },
+      { text: "Tôi thường tìm kiếm niềm vui và sự tận hưởng trong công việc hàng ngày.", group: "hedonism" },
+      { text: "Tôi thích thể hiện bản sắc cá nhân thông qua phong cách làm việc.", group: "artistic" },
+      { text: "Tôi coi trọng sự công bằng và bình đẳng trong mọi mối quan hệ.", group: "universalism" },
+      { text: "Tôi thích làm việc với các thiết bị công nghệ hiện đại.", group: "realistic" },
+      { text: "Tôi thường dành thời gian để suy ngẫm về mục tiêu dài hạn của mình.", group: "conscientiousness" },
+      { text: "Tôi tự tin khi trình bày ý tưởng trước đám đông.", group: "enterprising" },
+      { text: "Tôi là người kiên trì và luôn hoàn thành công việc đúng hạn.", group: "conscientiousness" },
+      { text: "Tôi thích tìm tòi các giải pháp công nghệ để tối ưu hóa năng suất.", group: "investigative" },
+      { text: "Tôi coi trọng sự an toàn tài chính và công việc ổn định.", group: "security" }
     ];
 
-    let currentIdx = 0;
-    let answers = {};
+    const groupInfo = {
+      realistic: { name: "Thực tế (Realistic)", narrative: "Bạn là người hành động, thích làm việc với các công cụ, máy móc và vật thể hữu hình. Bạn coi trọng tính thực tiễn và sự ổn định.", traits: ["Kỹ thuật", "Thực tế"], strengths: ["Kỹ năng vận hành", "Sửa chữa"], weaknesses: ["Giao tiếp xã hội"], potential: ["Chuyên gia kỹ thuật"] },
+      investigative: { name: "Nghiên cứu (Investigative)", narrative: "Bạn là người quan sát, thích tìm tòi, nghiên cứu và giải quyết các vấn đề phức tạp. Bạn coi trọng trí tuệ và tư duy logic.", traits: ["Phân tích", "Tò mò"], strengths: ["Giải quyết vấn đề", "Nghiên cứu"], weaknesses: ["Hành động thực tế"], potential: ["Nhà khoa học/Phân tích"] },
+      artistic: { name: "Nghệ thuật (Artistic)", narrative: "Bạn là người sáng tạo, trực giác và thích thể hiện bản thân qua các hình thức nghệ thuật. Bạn coi trọng sự tự do và đổi mới.", traits: ["Sáng tạo", "Trực giác"], strengths: ["Đổi mới", "Thiết kế"], weaknesses: ["Quy trình cứng nhắc"], potential: ["Nhà sáng tạo nội dung"] },
+      social: { name: "Xã hội (Social)", narrative: "Bạn là người thấu cảm, thích giúp đỡ, giảng dạy và chăm sóc người khác. Bạn coi trọng các mối quan hệ và giá trị cộng đồng.", traits: ["Thấu cảm", "Kết nối"], strengths: ["Giao tiếp", "Hỗ trợ"], weaknesses: ["Kỹ thuật khô khan"], potential: ["Quản trị nhân sự/Đào tạo"] },
+      enterprising: { name: "Quản lý (Enterprising)", narrative: "Bạn là người năng động, thích dẫn dắt, thuyết phục và đạt được các mục tiêu kinh doanh. Bạn coi trọng thành tựu và tầm ảnh hưởng.", traits: ["Quyết đoán", "Năng lượng"], strengths: ["Lãnh đạo", "Thuyết phục"], weaknesses: ["Chi tiết nhỏ"], potential: ["Lãnh đạo doanh nghiệp"] },
+      conventional: { name: "Nghiệp vụ (Conventional)", narrative: "Bạn là người ngăn nắp, cẩn thận và thích làm việc với dữ liệu theo các quy trình rõ ràng. Bạn coi trọng sự chính xác và hiệu quả.", traits: ["Cẩn thận", "Ngăn nắp"], strengths: ["Quản lý dữ liệu", "Quy trình"], weaknesses: ["Sự thay đổi đột ngột"], potential: ["Chuyên gia vận hành"] },
+      extraversion: { name: "Hướng ngoại", narrative: "Năng lượng từ giao tiếp", traits: ["Năng động"], strengths: ["Giao tiếp"], weaknesses: ["Độc lập"], potential: ["Kết nối"] },
+      neuroticism: { name: "Nhạy cảm", narrative: "Cảm xúc sâu sắc", traits: ["Nhạy cảm"], strengths: ["Thấu hiểu"], weaknesses: ["Áp lực"], potential: ["Nhạy bén"] },
+      openness: { name: "Cởi mở", narrative: "Yêu cái mới", traits: ["Sáng tạo"], strengths: ["Thích nghi"], weaknesses: ["Mất tập trung"], potential: ["Khám phá"] },
+      hedonism: { name: "Tận hưởng", narrative: "Yêu cuộc sống", traits: ["Vui vẻ"], strengths: ["Năng lượng tích cực"], weaknesses: ["Kỷ luật"], potential: ["Truyền cảm hứng"] },
+      universalism: { name: "Bình đẳng", narrative: "Vì cộng đồng", traits: ["Công bằng"], strengths: ["Tầm nhìn xa"], weaknesses: ["Cá nhân"], potential: ["Hoạt động xã hội"] },
+      conscientiousness: { name: "Tận tâm", narrative: "Trách nhiệm cao", traits: ["Kỷ luật"], strengths: ["Đúng hạn"], weaknesses: ["Sáng tạo"], potential: ["Quản lý"] },
+      security: { name: "An toàn", narrative: "Ổn định là trên hết", traits: ["Thận trọng"], strengths: ["Bảo mật"], weaknesses: ["Mạo hiểm"], potential: ["Bảo vệ"] }
+    };
 
-    // UI Elements
-    const qText = document.getElementById('question-text');
-    const qMeta = document.getElementById('question-meta');
-    const progressBar = document.getElementById('progress-bar');
-    const prevBtn = document.getElementById('prev-btn');
-    const nextBtn = document.getElementById('next-btn');
-    const optionBtns = document.querySelectorAll('.option-btn');
+    const dimDesc = {
+      riasec: {
+        realistic: ["Bạn ít quan tâm đến việc làm việc với công cụ vật lý.", "Bạn có khả năng vận hành máy móc cơ bản.", "Bạn là một chuyên gia về kỹ thuật và vận hành thực tế."],
+        investigative: ["Bạn thích các giải pháp có sẵn hơn là nghiên cứu sâu.", "Bạn có tư duy phân tích ở mức ổn định.", "Bạn có khả năng nghiên cứu và giải quyết vấn đề cực kỳ xuất sắc."],
+        artistic: ["Bạn thích sự ổn định và quy trình truyền thống.", "Bạn có khả năng sáng tạo trong công việc hàng ngày.", "Bạn là người có tư duy đổi mới và khả năng sáng tạo vượt trội."],
+        social: ["Bạn ưu tiên làm việc độc lập và tập trung vào chuyên môn.", "Bạn có kỹ năng làm việc nhóm và thấu hiểu ở mức tốt.", "Bạn là người có khả năng kết nối và hỗ trợ cộng đồng mạnh mẽ."],
+        enterprising: ["Bạn thích các vị trí hỗ trợ hơn là dẫn dắt.", "Bạn có tố chất lãnh đạo và khả năng thuyết phục.", "Bạn là người quyết đoán với khả năng dẫn dắt tổ chức xuất sắc."],
+        conventional: ["Bạn thích sự linh hoạt và không muốn bị ràng buộc bởi quy trình.", "Bạn là người ngăn nắp và làm việc có kế hoạch.", "Bạn có khả năng quản trị nghiệp vụ và dữ liệu vô cùng chính xác."]
+      },
+      bigFive: {
+        openness: ["Bạn thích những gì quen thuộc và an toàn.", "Bạn sẵn sàng đón nhận những thay đổi mới.", "Bạn luôn tìm kiếm những trải nghiệm và ý tưởng đột phá."],
+        conscientiousness: ["Bạn làm việc theo cảm hứng và sự linh hoạt.", "Bạn là người có trách nhiệm và kỷ luật trong công việc.", "Bạn cực kỳ tận tâm và luôn hoàn thành xuất sắc mọi cam kết."],
+        extraversion: ["Bạn thích môi trường làm việc yên tĩnh và độc lập.", "Bạn thoải mái khi giao tiếp và làm việc với mọi người.", "Bạn tràn đầy năng lượng và luôn là tâm điểm trong các hoạt động nhóm."],
+        agreeableness: ["Bạn ưu tiên mục tiêu cá nhân và sự cạnh tranh.", "Bạn là người hòa đồng và dễ hợp tác.", "Bạn vô cùng thấu cảm và luôn đặt lợi ích tập thể lên trên."],
+        neuroticism: ["Bạn giữ được sự bình tĩnh tuyệt vời dưới áp lực.", "Bạn có sự nhạy cảm nhất định với môi trường xung quanh.", "Bạn có nội tâm sâu sắc và cảm xúc phong phú."]
+      },
+      schwartz: {
+        selfDirection: ["Thích hướng dẫn", "Tự chủ tốt", "Độc lập tuyệt đối"],
+        stimulation: ["Yêu ổn định", "Thích đổi mới", "Yêu mạo hiểm"],
+        hedonism: ["Kỷ luật cao", "Biết tận hưởng", "Yêu cuộc sống"],
+        achievement: ["Ít tham vọng", "Cầu tiến", "Khát khao thành công"],
+        power: ["Thích hỗ trợ", "Có ảnh hưởng", "Khát khao quyền lực"],
+        security: ["Thích mạo hiểm", "Coi trọng an toàn", "Ưu tiên ổn định"],
+        conformity: ["Thích phá cách", "Tuân thủ tốt", "Kỷ luật thép"],
+        tradition: ["Thích đổi mới", "Trân trọng quá khứ", "Gìn giữ truyền thống"],
+        benevolence: ["Tập trung cá nhân", "Tốt bụng", "Vị tha vô điều kiện"],
+        universalism: ["Thực dụng", "Công bằng", "Lý tưởng hóa"]
+      }
+    };
 
-    function updateUI() {
-      const q = questions[currentIdx];
-      qText.innerText = q.text;
-      qMeta.innerText = `CÂU HỎI ${currentIdx + 1}/${questions.length}`;
-      progressBar.style.width = `${((currentIdx + 1) / questions.length) * 100}%`;
+    const conclusionData = {
+      realistic: { conclusion: "Bạn là người thực tế, hành động và có khả năng vận hành tuyệt vời.", suitable: ["Kỹ sư vận hành", "Chuyên gia kỹ thuật"], unsuitable: ["Quan hệ công chúng", "Nghệ thuật trình diễn"] },
+      investigative: { conclusion: "Bạn có trí tuệ sắc bén và khả năng phân tích vấn đề chuyên sâu.", suitable: ["Nhà phân tích dữ liệu", "Nghiên cứu viên"], unsuitable: ["Bán hàng trực tiếp", "Quản trị sự kiện"] },
+      artistic: { conclusion: "Bạn sở hữu tâm hồn nghệ sĩ và khả năng sáng tạo không giới hạn.", suitable: ["Thiết kế đồ họa", "Sáng tạo nội dung"], unsuitable: ["Kế toán/Kiểm toán", "Vận hành quy chuẩn"] },
+      social: { conclusion: "Bạn là trái tim của tập thể với khả năng thấu cảm và kết nối.", suitable: ["Tư vấn tâm lý", "Quản trị nhân sự"], unsuitable: ["Lập trình viên độc lập", "Kỹ thuật máy móc"] },
+      enterprising: { conclusion: "Bạn là nhà lãnh đạo bẩm sinh với khả năng thuyết phục mạnh mẽ.", suitable: ["Quản trị kinh doanh", "Khởi nghiệp"], unsuitable: ["Lưu trữ hồ sơ", "Nghiên cứu lý thuyết"] },
+      conventional: { conclusion: "Bạn là người kiến tạo sự ổn định và chính xác trong mọi hệ thống.", suitable: ["Chuyên gia tài chính", "Quản lý quy trình"], unsuitable: ["Nghệ thuật tự do", "Khám phá mạo hiểm"] }
+    };
 
-      // Reset selection
-      optionBtns.forEach(btn => {
-        btn.classList.remove('selected');
-        if (parseInt(btn.dataset.val) === answers[questions[currentIdx].id]) {
-          btn.classList.add('selected');
-        }
+    function renderPage() {
+      const area = document.getElementById('questionArea');
+      const names = { 5: "Rất đúng", 4: "Khá đúng", 3: "Bình thường", 2: "Ít đúng", 1: "Không đúng" };
+      let html = `<div class="scale-header">${['RẤT ĐÚNG','KHÁ ĐÚNG','BÌNH THƯỜNG','ÍT ĐÚNG','KHÔNG ĐÚNG'].map(l=>`<div class="scale-label">${l.split(' ').map(s=>`<span>${s}</span>`).join('')}</div>`).join('')}</div><div class="questions-list">`;
+      questions.forEach((q, i) => {
+        html += `<div class="q-item" id="q-${i}"><div class="q-text">${q.text}</div><div class="options-row">${[5,4,3,2,1].map(s=>`<label class="opt-label" title="${names[s]}"><input type="radio" name="q-${i}" value="${s}" ${answers[i]===s?'checked':''} onchange="saveAns(${i}, ${s})"><div class="opt-circle"></div></label>`).join('')}</div></div>`;
       });
-
-      prevBtn.disabled = currentIdx === 0;
-      nextBtn.disabled = !answers[questions[currentIdx].id];
-      nextBtn.innerText = currentIdx === questions.length - 1 ? "HOÀN TẤT" : "TIẾP THEO →";
+      area.innerHTML = html + `</div>`;
     }
 
-    optionBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const val = parseInt(btn.dataset.val);
-        answers[questions[currentIdx].id] = val;
-        updateUI();
+    let answers = new Array(35).fill(null);
 
-        // Auto-advance
-        if (currentIdx < questions.length - 1) {
-          setTimeout(() => {
-            currentIdx++;
-            updateUI();
-          }, 300);
-        }
-      });
-    });
+    function saveAns(i, s) { answers[i] = s; document.getElementById(`q-${i}`).classList.add('answered'); updateProgress(); }
+    function updateProgress() { document.getElementById('progressFill').style.width = (answers.filter(a=>a!==null).length/35*100) + '%'; }
 
-    prevBtn.addEventListener('click', () => {
-      if (currentIdx > 0) {
-        currentIdx--;
-        updateUI();
+    function goNext() {
+      const missing = answers.map((a,i)=>a===null?i:-1).filter(i=>i!==-1);
+      if (missing.length > 0) {
+        showToast(`Bạn còn ${missing.length} câu chưa làm`);
+        const first = document.getElementById(`q-${missing[0]}`);
+        if (first) { first.scrollIntoView({ behavior:'smooth', block:'center'}); first.classList.add('error'); setTimeout(()=>first.classList.remove('error'),800); }
+        return;
       }
-    });
+      showResult();
+    }
 
-    nextBtn.addEventListener('click', () => {
-      if (currentIdx < questions.length - 1) {
-        currentIdx++;
-        updateUI();
-      } else {
-        processResults();
-      }
-    });
-
-    async function processResults() {
-      document.getElementById('quiz-view').style.display = 'none';
-      document.getElementById('results-view').style.display = 'block';
-      window.scrollTo(0, 0);
-
-      // Get profile
-      const profile = JSON.parse(localStorage.getItem('kareer_profile') || '{}');
-      const combinedData = { ...profile, answers };
-
-      // Get Analysis from API
+    function showResult() {
       try {
-        const result = await KareerAPI.getAnalysis(combinedData);
-        if (result.success) {
-          document.getElementById('personal-traits').innerText = result.analysis.personal_traits;
-          document.getElementById('strengths').innerText = result.analysis.strengths;
-          document.getElementById('limitations').innerText = result.analysis.limitations;
-          document.getElementById('breakthrough').innerText = result.analysis.breakthrough;
-        } else {
-          fallbackAnalysis();
-        }
-      } catch (err) {
-        fallbackAnalysis();
-      }
+        const a = answers;
+        const scoreModel = (items) => {
+          let raw = 0, max = 0;
+          items.forEach(it => { raw += (it.w > 0 ? a[it.qi] : (6 - a[it.qi])); max += 5; });
+          return Math.round((raw / max) * 100);
+        };
+        const getLv = (pct) => {
+          if (pct >= 70) return { text: 'Cao', class: 'val-vhigh', pct };
+          if (pct >= 40) return { text: 'Trung bình', class: 'val-med', pct };
+          return { text: 'Thấp', class: 'val-low', pct };
+        };
+
+        const riasec = {
+          realistic: getLv(scoreModel([{qi:12,w:1},{qi:13,w:1}])),
+          investigative: getLv(scoreModel([{qi:14,w:1},{qi:15,w:1},{qi:16,w:1},{qi:1,w:1}])),
+          artistic: getLv(scoreModel([{qi:0,w:1},{qi:1,w:1},{qi:2,w:1},{qi:17,w:1},{qi:25,w:1},{qi:27,w:1}])),
+          social: getLv(scoreModel([{qi:9,w:1},{qi:10,w:1},{qi:11,w:1},{qi:21,w:1},{qi:24,w:1}])),
+          enterprising: getLv(scoreModel([{qi:3,w:1},{qi:4,w:1},{qi:5,w:1},{qi:18,w:1},{qi:32,w:1}])),
+          conventional: getLv(scoreModel([{qi:6,w:1},{qi:7,w:1},{qi:8,w:1},{qi:19,w:1},{qi:20,w:1}]))
+        };
+
+        const bigFive = {
+          openness: getLv(scoreModel([{qi:0,w:1},{qi:1,w:1},{qi:2,w:1},{qi:15,w:1},{qi:25,w:1}])),
+          conscientiousness: getLv(scoreModel([{qi:6,w:1},{qi:7,w:1},{qi:8,w:1},{qi:33,w:1}])),
+          extraversion: getLv(scoreModel([{qi:3,w:1},{qi:5,w:1},{qi:22,w:1},{qi:32,w:1}])),
+          agreeableness: getLv(scoreModel([{qi:9,w:1},{qi:11,w:1},{qi:24,w:1},{qi:31,w:1}])),
+          neuroticism: getLv(scoreModel([{qi:23,w:1}]))
+        };
+
+        const schwartz = {
+          selfDirection: getLv(scoreModel([{qi:0,w:1},{qi:17,w:1}])),
+          stimulation: getLv(scoreModel([{qi:1,w:1},{qi:25,w:1}])),
+          hedonism: getLv(scoreModel([{qi:26,w:1}])),
+          achievement: getLv(scoreModel([{qi:4,w:1},{qi:18,w:1}])),
+          power: getLv(scoreModel([{qi:3,w:1},{qi:32,w:1}])),
+          security: getLv(scoreModel([{qi:6,w:1},{qi:19,w:1}])),
+          conformity: getLv(scoreModel([{qi:20,w:1},{qi:7,w:1}])),
+          tradition: getLv(scoreModel([{qi:20,w:1}])),
+          benevolence: getLv(scoreModel([{qi:9,w:1},{qi:24,w:1}])),
+          universalism: getLv(scoreModel([{qi:11,w:1},{qi:10,w:1}]))
+        };
+
+        const scores = {};
+        questions.forEach((q,i) => scores[q.group] = (scores[q.group]||0) + a[i]);
+        const sorted = Object.keys(scores).sort((a,b)=>scores[b]-scores[a]);
+        const top = sorted[0], secondary = sorted[1]||top;
+        const profile = JSON.parse(localStorage.getItem('kareer_profile')||'{"name":"Bạn"}');
+
+        const renderSection = (title, icon, data, descKey) => {
+          return `
+            <div class="theory-section">
+              <div class="theory-section-hdr"><span>${icon} ${title}</span></div>
+              <div class="dim-list">
+                ${Object.entries(data).map(([key, val]) => {
+                  const descIdx = val.pct >= 70 ? 2 : (val.pct >= 40 ? 1 : 0);
+                  const desc = dimDesc[descKey][key][descIdx];
+                  return `
+                    <div class="dim-item">
+                      <div class="dim-item-top"><span class="dim-label">${key.toUpperCase()}</span><span class="dim-badge ${val.class}">${val.text} (${val.pct}%)</span></div>
+                      <div class="dim-bar-track"><div class="dim-bar-fill ${val.class}" style="width: ${val.pct}%"></div></div>
+                      <p class="dim-desc">${desc}</p>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+          `;
+        };
+
+        const insightBlocks = [
+          { label: 'Đặc điểm cá nhân', items: [groupInfo[top].traits[0], groupInfo[secondary].traits[0], "Tư duy linh hoạt"] },
+          { label: 'Thế mạnh cốt lõi', items: [groupInfo[top].strengths[0], groupInfo[top].strengths[1] || groupInfo[top].strengths[0], "Khả năng thích ứng"] },
+          { label: 'Hạn chế cần lưu ý', items: [groupInfo[top].weaknesses[0], "Cần rèn luyện tính kiên nhẫn"] },
+          { label: 'Tiềm năng đột phá', items: [groupInfo[top].potential[0], "Phát triển đa năng"] }
+        ];
+
+        document.getElementById('resultBody').innerHTML = `
+          <div style="background:#fff; border:3px solid #000; padding:30px; margin-bottom:30px; border-radius:12px; box-shadow:8px 8px 0px 0px #000;">
+            <h3 style="margin-bottom:20px; font-weight:900; text-transform:uppercase;">KẾT QUẢ DÀNH CHO ${(profile.name||"BẠN").toUpperCase()}</h3>
+            <p style="font-size:1.1rem;">Bạn thuộc nhóm chủ đạo <strong>${groupInfo[top].name}</strong>. ${groupInfo[top].narrative}</p>
+          </div>
+          <div class="insight-grid">${insightBlocks.map((b,idx)=>`<div class="insight-block"><h4 style="font-weight:900; margin-bottom:15px; text-transform:uppercase; border-bottom:2px solid #eee; padding-bottom:8px;">${b.label}</h4><ul class="insight-list">${b.items.map(it=>`<li>${it}</li>`).join('')}</ul></div>`).join('')}</div>
+          <div class="theory-box">
+            <h2 class="theory-title">PHÂN TÍCH THEO MÔ HÌNH KHOA HỌC</h2>
+            ${renderSection("Mô hình RIASEC", "🎯", riasec, "riasec")}
+            ${renderSection("Mô hình BIG FIVE", "🧠", bigFive, "bigFive")}
+            ${renderSection("Mô hình SCHWARTZ", "💎", schwartz, "schwartz")}
+          </div>
+
+          <div class="recommendation-box">
+            <h2 class="theory-title" style="border-bottom:3px solid #000;">KẾT LUẬN & KHUYẾN NGHỊ</h2>
+            <div style="margin-bottom: 30px;">
+              <h3 style="font-weight: 900; text-transform: uppercase; margin-bottom: 15px; font-size: 1.1rem;">Bản sắc nghề nghiệp của bạn</h3>
+              <p style="font-size: 1.05rem; line-height: 1.8; color: #333;">${conclusionData[top].conclusion}</p>
+            </div>
+            
+            <div class="rec-grid">
+              <div class="rec-item rec-suitable">
+                <div class="rec-title" style="color: #2e7d32;"><span>✅ Phù hợp nhất với</span></div>
+                <ul class="insight-list">
+                  ${conclusionData[top].suitable.map(it => `<li style="color: #2e7d32;">${it}</li>`).join('')}
+                </ul>
+              </div>
+              <div class="rec-item rec-unsuitable">
+                <div class="rec-title" style="color: #c62828;"><span>❌ Không phù hợp với</span></div>
+                <ul class="insight-list">
+                  ${conclusionData[top].unsuitable.map(it => `<li style="color: #c62828;">${it}</li>`).join('')}
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="result-actions" style="display: flex; gap: 15px; justify-content: center; margin-top: 40px;">
+            <button class="btn btn-ghost" onclick="window.location.href='/'">Trang chủ</button>
+            <button class="btn btn-primary" style="background: #111; color: white;" onclick="window.location.href='../Step_3_Matrix/index.html'">Khám phá ma trận nghề nghiệp</button>
+            <button class="btn btn-ghost" onclick="location.reload()">Làm lại</button>
+          </div>
+        `;
+
+        document.getElementById('hdrBlock').style.display = 'none';
+        document.getElementById('questionArea').style.display = 'none';
+        document.getElementById('quizFooter').style.display = 'none';
+        document.getElementById('progressShell').style.display = 'none';
+        document.getElementById('resultScreen').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } catch (err) { console.error(err); showToast("Có lỗi xảy ra. Vui lòng thử lại."); }
     }
 
-    function fallbackAnalysis() {
-      document.getElementById('personal-traits').innerText = "Bạn là người có sự cân bằng giữa tư duy logic và khả năng sáng tạo. Bạn thích làm việc trong môi trường có cấu trúc rõ ràng nhưng vẫn giữ được sự linh hoạt.";
-      document.getElementById('strengths').innerText = "Khả năng phân tích vấn đề sâu sắc, sự kiên trì trong mục tiêu và kỹ năng giao tiếp hiệu quả.";
-      document.getElementById('limitations').innerText = "Đôi khi quá cầu toàn dẫn đến việc chậm tiến độ, hoặc dễ bị áp lực khi đối mặt với quá nhiều thay đổi cùng lúc.";
-      document.getElementById('breakthrough').innerText = "Hãy tập trung vào việc phát triển kỹ năng lãnh đạo và quản lý dự án để tối ưu hóa năng lực cá nhân.";
-    }
-
-    // Start
-    updateUI();
+    function showToast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3000); }
+    renderPage();
   </script>
 </body>
 
